@@ -16,6 +16,7 @@ const elemUserId = document.getElementById("userid");
 const elemFingerId = document.getElementById("fingerid");
 const elemResult = document.getElementById("results");
 const modalResDiv = document.getElementById("modalResDiv");
+const resModelLabel = document.getElementById("resModelLabel");
 
 var enroll_btn = document.getElementById('enroll');
 enroll_btn.addEventListener("click", enrollmessageContentScript);
@@ -112,6 +113,7 @@ function populateResMsg(res) {
   }
   modalResDiv.style.color = 'red';
   modalResDiv.innerHTML = `<h5>${res.message}</h5>`;
+  resModelLabel.innerHTML = `<h5>${createTimeStr()}</h5>`;
   $('#resModel').modal('show');
 }
 
@@ -126,4 +128,9 @@ function clearLastRes(btn) {
 
 function resetInputTextColor() {
   elemFingerId.style.color = elemUserId.style.color = '';
+}
+
+function createTimeStr() {
+  const currentdate = new Date();
+  return currentdate.getFullYear() + "-" + currentdate.getDate() + "-" + (currentdate.getMonth() + 1) + ", " + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
 }
