@@ -6,3 +6,17 @@ body {
 a {
   color: #00B7FF;
 }
+
+.container-fluid {
+  margin-top: 10px;
+}
+
+textarea {
+  resize: none;
+}
+
+#testBox {
+  border-style: solid;
+  padding: 5px;
+  border-color: red;
+}
