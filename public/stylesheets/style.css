@@ -15,8 +15,6 @@ textarea {
   resize: none;
 }
 
-#testBox {
-  border-style: solid;
-  padding: 5px;
-  border-color: red;
+.col-sm-4 {
+  margin-top: 10px;
 }
