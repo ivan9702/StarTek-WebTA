@@ -21,6 +21,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/css/bootstrap.css', express.static('node_modules/bootstrap/dist/css/bootstrap.min.css'));
+app.use('/jquery/jquery.slim.min.js', express.static('node_modules/jquery/dist/jquery.slim.min.js'));
+app.use('/bootstrap/bootstrap.min.js', express.static('node_modules/bootstrap/dist/js/bootstrap.min.js'));
 
 app.use('/', index);
 app.use('/users', users);
