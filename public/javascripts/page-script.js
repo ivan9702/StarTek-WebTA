@@ -15,6 +15,7 @@ const fingerStr = [
 const elemUserId = document.getElementById("userid");
 const elemFingerId = document.getElementById("fingerid");
 const elemResult = document.getElementById("results");
+const modalResDiv = document.getElementById("modalResDiv");
 
 var enroll_btn = document.getElementById('enroll');
 enroll_btn.addEventListener("click", enrollmessageContentScript);
@@ -109,6 +110,9 @@ function populateResMsg(res) {
     elemUserId.style.color = 'red';
     elemUserId.value = res.data.userId;
   }
+  modalResDiv.style.color = 'red';
+  modalResDiv.innerHTML = `<h5>${res.message}</h5>`;
+  $('#resModel').modal('show');
 }
 
 function clearLastRes(btn) {
