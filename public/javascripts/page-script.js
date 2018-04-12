@@ -107,9 +107,9 @@ function populateResMsg(res) {
     elemFingerId.selectedIndex = res.data.fpIndex;
   }
 
-  if ( res.data && res.data.userId ) {
+  if ( res.data && (res.data.userId || res.data.clientUserId)) {
     elemUserId.style.color = 'red';
-    elemUserId.value = res.data.userId;
+    elemUserId.value = res.data.userId || res.data.clientUserId;
   }
   modalResDiv.style.color = 'red';
   modalResDiv.innerHTML = `<h5>${res.message}</h5>`;
