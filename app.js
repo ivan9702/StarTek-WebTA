@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var entries = require('./routes/entries');
 
 var app = express();
 
@@ -26,6 +27,9 @@ app.use('/bootstrap/bootstrap.min.js', express.static('node_modules/bootstrap/di
 
 app.use('/', index);
 app.use('/users', users);
+
+app.post('/addEntry', entries.addEntry);
+app.get('/listAll', entries.listAll);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
