@@ -132,5 +132,10 @@ function resetInputTextColor() {
 
 function createTimeStr() {
   const currentdate = new Date();
-  return currentdate.getFullYear() + "-" + currentdate.getDate() + "-" + (currentdate.getMonth() + 1) + ", " + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
+  const dateTime = [currentdate.getMonth() + 1, currentdate.getDate(), currentdate.getHours(), currentdate.getMinutes(), currentdate.getSeconds()];
+  const dateTimeArr = dateTime.map((num) => {
+    let str = num.toString();
+    return str = str.length === 2 ? str : '0'.concat(str);
+  });
+  return currentdate.getFullYear() + "-" + dateTimeArr[0] + "-" + dateTimeArr[1] + " " + dateTimeArr[2] + ":" + dateTimeArr[3] + ":" + dateTimeArr[4];
 }
