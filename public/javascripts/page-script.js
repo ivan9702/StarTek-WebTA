@@ -101,6 +101,7 @@ elemFingerId.onfocus = elemUserId.onfocus = resetInputTextColor;
 function populateResMsg(res) {
   elemResult.style.color = 'red';
   elemResult.value = res.message;
+  const timeStr = createTimeStr();
 
   if ( res.data && res.data.fpIndex ) {
     elemFingerId.style.color = 'red';
@@ -110,10 +111,11 @@ function populateResMsg(res) {
   if ( res.data && (res.data.userId || res.data.clientUserId)) {
     elemUserId.style.color = 'red';
     elemUserId.value = res.data.userId || res.data.clientUserId;
+    saveTaRecord(res.data.userId || res.data.clientUserId, timeStr);
   }
   modalResDiv.style.color = 'red';
   modalResDiv.innerHTML = `<h5>${res.message}</h5>`;
-  resModelLabel.innerHTML = `<h5>${createTimeStr()}</h5>`;
+  resModelLabel.innerHTML = `<h5>${timeStr}</h5>`;
   $('#resModel').modal('show');
 }
 
@@ -138,4 +140,11 @@ function createTimeStr() {
     return str = str.length === 2 ? str : '0'.concat(str);
   });
   return currentdate.getFullYear() + "-" + dateTimeArr[0] + "-" + dateTimeArr[1] + " " + dateTimeArr[2] + ":" + dateTimeArr[3] + ":" + dateTimeArr[4];
+}
+
+function saveTaRecord(userId, dateTime) {
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', 'http://localhost:3000/addEntry');
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(JSON.stringify({userId, dateTime}));
 }
