@@ -1,35 +1,21 @@
-const fingerStr = [
-  'N/A',
-  'Right Thumb',
-  'Right Index',
-  'Right Middle',
-  'Right Ring',
-  'Right Little',
-  'Left Thumb',
-  'Left Index',
-  'Left Middle',
-  'Left Ring',
-  'Left Little',
-];
-
-const elemUserId = document.getElementById("userid");
-const elemFingerId = document.getElementById("fingerid");
-const elemResult = document.getElementById("results");
-const modalResDiv = document.getElementById("modalResDiv");
-const resModelLabel = document.getElementById("resModelLabel");
+const elemUserId = document.getElementById('userid');
+const elemFingerId = document.getElementById('fingerid');
+const elemResult = document.getElementById('results');
+const modalResDiv = document.getElementById('modalResDiv');
+const resModelLabel = document.getElementById('resModelLabel');
 
 var enroll_btn = document.getElementById('enroll');
-enroll_btn.addEventListener("click", enrollmessageContentScript);
+enroll_btn.addEventListener('click', enrollmessageContentScript);
 
 function enrollmessageContentScript() {
 	var send_user_value = document.getElementById('userid').value;
 	var send_finger_value = elemFingerId.value;
   clearLastRes(enroll_btn);
   window.postMessage({
-    direction: "lv0-TX",
-    message: "enroll&"+send_user_value+"&"+send_finger_value
-  }, "*");
-  console.log("Lv0 PS.js tx:"+"enroll&"+send_user_value+"&"+send_finger_value);
+    direction: 'lv0-TX',
+    message: 'enroll&'+send_user_value+'&'+send_finger_value
+  }, '*');
+  console.log('Lv0 PS.js tx:'+'enroll&'+send_user_value+'&'+send_finger_value);
 }
 /*
 enroll_btn.onclick = function() {
@@ -37,15 +23,15 @@ enroll_btn.onclick = function() {
 }
 */
 var verify_btn = document.getElementById('verify');
-verify_btn.addEventListener("click", verifymessageContentScript);
+verify_btn.addEventListener('click', verifymessageContentScript);
 function verifymessageContentScript() {
 	var send_user_value = document.getElementById('userid').value;
   clearLastRes(verify_btn);
   window.postMessage({
-    direction: "lv0-TX",
-    message: "verify&"+send_user_value
-  }, "*");
-  console.log("Lv0 PS.js tx:"+ "verify&"+send_user_value);
+    direction: 'lv0-TX',
+    message: 'verify&'+send_user_value
+  }, '*');
+  console.log('Lv0 PS.js tx:'+ 'verify&'+send_user_value);
 }
 /*
 verify_btn.onclick = function() {
@@ -53,14 +39,14 @@ verify_btn.onclick = function() {
 }
 */
 var identify_btn = document.getElementById('identify');
-identify_btn.addEventListener("click", identifymessageContentScript);
+identify_btn.addEventListener('click', identifymessageContentScript);
 function identifymessageContentScript() {
   clearLastRes(identify_btn);
   window.postMessage({
-    direction: "lv0-TX",
-    message: "identify"
-  }, "*");
-  console.log("Lv0 PS.js tx:"+"identify");
+    direction: 'lv0-TX',
+    message: 'identify'
+  }, '*');
+  console.log('Lv0 PS.js tx:'+'identify');
 }
 /*
 identify_btn.onclick = function() {
@@ -68,30 +54,30 @@ identify_btn.onclick = function() {
 }
 */
 var delete_finger_btn = document.getElementById('delete_finger');
-delete_finger_btn.addEventListener("click", deletefingermessageContentScript);
+delete_finger_btn.addEventListener('click', deletefingermessageContentScript);
 
 function deletefingermessageContentScript() {
 	var send_user_value = document.getElementById('userid').value;
 	var send_finger_value = elemFingerId.value;
   clearLastRes(delete_finger_btn);
   window.postMessage({
-    direction: "lv0-TX",
-    message: "delete_finger&"+send_user_value+"&"+send_finger_value
-  }, "*");
-  console.log("Lv0 PS.js tx:"+ "delete_finger&"+send_user_value+"&"+send_finger_value);
+    direction: 'lv0-TX',
+    message: 'delete_finger&'+send_user_value+'&'+send_finger_value
+  }, '*');
+  console.log('Lv0 PS.js tx:'+ 'delete_finger&'+send_user_value+'&'+send_finger_value);
 }
 /*
 enroll_btn.onclick = function() {
     alert('enroll click!');
 }
 */
-window.addEventListener("message", function(event) {
+window.addEventListener('message', function(event) {
   if (event.source == window &&
       event.data.direction &&
-      event.data.direction == "lv0-RX") {
+      event.data.direction == 'lv0-RX') {
       	
-      populateResMsg(JSON.parse(decodeURIComponent(event.data.message).replace(/\+/g, " ")));
-      console.log("Lv0 PS.js rx:"+ event.data.message);
+      populateResMsg(JSON.parse(decodeURIComponent(event.data.message).replace(/\+/g, ' ')));
+      console.log('Lv0 PS.js rx:'+ event.data.message);
 
   }
 });
@@ -139,7 +125,7 @@ function createTimeStr() {
     let str = num.toString();
     return str = str.length === 2 ? str : '0'.concat(str);
   });
-  return currentdate.getFullYear() + "-" + dateTimeArr[0] + "-" + dateTimeArr[1] + " " + dateTimeArr[2] + ":" + dateTimeArr[3] + ":" + dateTimeArr[4];
+  return currentdate.getFullYear() + '-' + dateTimeArr[0] + '-' + dateTimeArr[1] + ' ' + dateTimeArr[2] + ':' + dateTimeArr[3] + ':' + dateTimeArr[4];
 }
 
 function saveTaRecord(userId, dateTime) {
