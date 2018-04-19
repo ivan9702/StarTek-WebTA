@@ -75,10 +75,9 @@ window.addEventListener('message', function(event) {
   if (event.source == window &&
       event.data.direction &&
       event.data.direction == 'lv0-RX') {
-      	
-      populateResMsg(JSON.parse(decodeURIComponent(event.data.message).replace(/\+/g, ' ')));
-      console.log('Lv0 PS.js rx:'+ event.data.message);
-
+        const response = JSON.parse(decodeURIComponent(event.data.message).replace(/\+/g, ' '));
+        console.log(`Lv0 PS.js rx: ${JSON.stringify(response)}`);
+        populateResMsg(response);
   }
 });
 
