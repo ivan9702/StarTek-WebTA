@@ -3,7 +3,10 @@ const Entry = require('../models/entry').Entry;
 exports.listAll = (req, res, next) => {
   Entry.all((err, entries) => {
     if (err) return next(err);
-    res.send(entries);
+    res.render('entries', {
+      title: 'All the TA Records',
+      entries: entries,
+    });
   });
 };
 

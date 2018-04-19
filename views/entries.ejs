@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <table style="width:50%">
+      <tr>
+        <th>User ID</th>
+        <th>TA Time</th>
+      </tr>
+      <% for (let i = 0; i < entries.length; i++) { %>
+        <tr>
+          <td>
+            <%= entries[i].id %>
+          </td>
+          <td>
+            <%= entries[i].dateTime %>
+          </td>
+        </tr>
+        <% } %>
+    </table>
+  </body>
+</html>
