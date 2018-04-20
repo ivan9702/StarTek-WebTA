@@ -31,6 +31,7 @@ app.use('/users', users);
 app.post('/addEntry', entries.addEntry);
 app.get('/filterById/:userId', entries.filterById);
 app.get('/filterByDate/:date', entries.filterByDate);
+app.get('/filter/:userId/:date', entries.filter);
 app.get('/listAll', entries.listAll);
 
 // catch 404 and forward to error handler
