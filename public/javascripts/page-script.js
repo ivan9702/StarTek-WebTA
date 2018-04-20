@@ -4,6 +4,7 @@ const elemResult = document.getElementById('results');
 const modalResDiv = document.getElementById('modalResDiv');
 const resModelLabel = document.getElementById('resModelLabel');
 
+var taEntry_btn = document.getElementById('taEntry');
 var enroll_btn = document.getElementById('enroll');
 enroll_btn.addEventListener('click', enrollmessageContentScript);
 
@@ -66,6 +67,7 @@ function deletefingermessageContentScript() {
   }, '*');
   console.log('Lv0 PS.js tx:'+ 'delete_finger&'+send_user_value+'&'+send_finger_value);
 }
+
 /*
 enroll_btn.onclick = function() {
     alert('enroll click!');
@@ -78,6 +80,12 @@ window.addEventListener('message', function(event) {
         const response = JSON.parse(decodeURIComponent(event.data.message).replace(/\+/g, ' '));
         console.log(`Lv0 PS.js rx: ${JSON.stringify(response)}`);
         populateResMsg(response);
+        if ( response.code === 20003 ) {
+          taEntry_btn.innerHTML = 'Go to TA Records';
+          taEntry_btn.addEventListener('click', () => {
+            location = `http://localhost:3000/filter?userId=${elemUserId.value}`;
+          });
+        }
   }
 });
 
