@@ -27,3 +27,13 @@ exports.filterById = (req, res, next) => {
     });
   });
 };
+
+exports.filterByDate = (req, res, next) => {
+  Entry.filter({ date: req.params.date }, (err, entries) => {
+    if (err) return next(err);
+    res.render('entries', {
+      title: 'Filtered Records by Date',
+      entries,
+    });
+  });
+};

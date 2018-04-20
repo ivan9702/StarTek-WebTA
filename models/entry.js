@@ -19,8 +19,24 @@ class Entry {
   }
 
   static filter(data, cb) {
-    const sql = 'SELECT * FROM entries WHERE id = (?)';
-    db.all(sql, data.userId, cb);
+    let sql = '';
+    const sqlExp = [];
+    let whereClause = '';
+
+    if (data.userId) {
+      sqlExp.push(` id = (?) `);
+      sql = 'SELECT * FROM entries WHERE id = (?)';
+      db.all(sql, data.userId, cb);
+    }
+    if (data.date) {
+      sqlExp.push(` dateTime LIKE (?) `);
+      sql = 'SELECT * FROM entries WHERE dateTime LIKE (?)';
+      db.all(sql, `${data.date}%` , cb);
+    }
+    whereClause = sqlExp.join('AND');
+    const newSql = `SELECT * FROM entries WHERE${whereClause}`;
+    console.log('whereClause: ', whereClause);
+    console.log('newSql: ', newSql);
   }
 }
 
