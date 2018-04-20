@@ -18,28 +18,8 @@ exports.addEntry = (req, res, next) => {
   });
 };
 
-exports.filterById = (req, res, next) => {
-  Entry.filter({ userId: req.params.userId }, (err, entries) => {
-    if (err) return next(err);
-    res.render('entries', {
-      title: 'Filtered Records by ID',
-      entries,
-    });
-  });
-};
-
-exports.filterByDate = (req, res, next) => {
-  Entry.filter({ date: req.params.date }, (err, entries) => {
-    if (err) return next(err);
-    res.render('entries', {
-      title: 'Filtered Records by Date',
-      entries,
-    });
-  });
-};
-
 exports.filter = (req, res, next) => {
-  Entry.filter({ userId: req.params.userId, date: req.params.date }, (err, entries) => {
+  Entry.filter({ userId: req.query.userId, date: req.query.date }, (err, entries) => {
     if (err) return next(err);
     res.render('entries', {
       title: 'Filtered Records',
