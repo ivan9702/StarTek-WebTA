@@ -73,19 +73,26 @@ enroll_btn.onclick = function() {
     alert('enroll click!');
 }
 */
+const goToTaPage = () => {
+  location = `http://localhost:3000/filter?userId=${elemUserId.value}`;
+};
+
+const updateModelFooterBtn = (res) => {
+  taEntry_btn.style.visibility = 'hidden';
+  if ( res.code === 20003 ) {
+    taEntry_btn.addEventListener('click', goToTaPage.bind(taEntry_btn));
+    taEntry_btn.style.visibility = 'visible';
+  }
+};
+
 window.addEventListener('message', function(event) {
   if (event.source == window &&
       event.data.direction &&
       event.data.direction == 'lv0-RX') {
         const response = JSON.parse(decodeURIComponent(event.data.message).replace(/\+/g, ' '));
         console.log(`Lv0 PS.js rx: ${JSON.stringify(response)}`);
+        updateModelFooterBtn(response);
         populateResMsg(response);
-        if ( response.code === 20003 ) {
-          taEntry_btn.innerHTML = 'Go to TA Records';
-          taEntry_btn.addEventListener('click', () => {
-            location = `http://localhost:3000/filter?userId=${elemUserId.value}`;
-          });
-        }
   }
 });
 
