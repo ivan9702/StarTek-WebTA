@@ -19,7 +19,7 @@ exports.addEntry = (req, res, next) => {
 };
 
 exports.filter = (req, res, next) => {
-  Entry.filter({ userId: req.query.userId, date: req.query.date }, (err, entries) => {
+  Entry.filter({ userId: req.body.userId, date: req.body.date }, (err, entries) => {
     if (err) return next(err);
     res.render('entries', {
       title: 'Filtered Records',

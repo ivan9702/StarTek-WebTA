@@ -74,7 +74,7 @@ enroll_btn.onclick = function() {
 }
 */
 const goToTaPage = () => {
-  location = `http://localhost:3000/filter?userId=${elemUserId.value}`;
+  post('http://localhost:3000/filter', { userId: elemUserId.value });
 };
 
 const updateModelFooterBtn = (res) => {
@@ -147,4 +147,26 @@ function saveTaRecord(userId, dateTime) {
   xhr.open('POST', 'http://localhost:3000/addEntry');
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.send(JSON.stringify({userId, dateTime}));
+}
+
+function post(path, params, method) {
+  method = method || "post";
+
+  const form = document.createElement("form");
+  form.setAttribute("method", method);
+  form.setAttribute("action", path);
+
+  for(let key in params) {
+    if(params.hasOwnProperty(key)) {
+      var hiddenField = document.createElement("input");
+      hiddenField.setAttribute("type", "hidden");
+      hiddenField.setAttribute("name", key);
+      hiddenField.setAttribute("value", params[key]);
+
+      form.appendChild(hiddenField);
+    }
+  }
+
+  document.body.appendChild(form);
+  form.submit();
 }

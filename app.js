@@ -29,7 +29,7 @@ app.use('/', index);
 app.use('/users', users);
 
 app.post('/addEntry', entries.addEntry);
-app.get('/filter', entries.filter);
+app.post('/filter', entries.filter);
 app.get('/listAll', entries.listAll);
 
 // catch 404 and forward to error handler
