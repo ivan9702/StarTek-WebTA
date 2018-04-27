@@ -86,13 +86,11 @@ const updateModelFooterBtn = (res) => {
 };
 
 window.addEventListener('message', function(event) {
-  if (event.source == window &&
-      event.data.direction &&
-      event.data.direction == 'lv0-RX') {
-        const response = JSON.parse(decodeURIComponent(event.data.message).replace(/\+/g, ' '));
-        console.log(`Lv0 PS.js rx: ${JSON.stringify(response)}`);
-        updateModelFooterBtn(response);
-        populateResMsg(response);
+  const msg = event.data.response;
+  if (msg && event.origin === 'http://localhost:3000') {
+    console.log(`message from CS: ${JSON.stringify(msg)}`);
+    updateModelFooterBtn(msg);
+    populateResMsg(msg);
   }
 });
 
