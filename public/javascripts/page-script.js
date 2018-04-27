@@ -5,74 +5,11 @@ const modalResDiv = document.getElementById('modalResDiv');
 const resModelLabel = document.getElementById('resModelLabel');
 
 var taEntry_btn = document.getElementById('taEntry');
-var enroll_btn = document.getElementById('enroll');
-enroll_btn.addEventListener('click', enrollmessageContentScript);
 
-function enrollmessageContentScript() {
-	var send_user_value = document.getElementById('userid').value;
-	var send_finger_value = elemFingerId.value;
-  clearLastRes(enroll_btn);
-  window.postMessage({
-    direction: 'lv0-TX',
-    message: 'enroll&'+send_user_value+'&'+send_finger_value
-  }, '*');
-  console.log('Lv0 PS.js tx:'+'enroll&'+send_user_value+'&'+send_finger_value);
-}
-/*
-enroll_btn.onclick = function() {
-    alert('enroll click!');
-}
-*/
-var verify_btn = document.getElementById('verify');
-verify_btn.addEventListener('click', verifymessageContentScript);
-function verifymessageContentScript() {
-	var send_user_value = document.getElementById('userid').value;
-  clearLastRes(verify_btn);
-  window.postMessage({
-    direction: 'lv0-TX',
-    message: 'verify&'+send_user_value
-  }, '*');
-  console.log('Lv0 PS.js tx:'+ 'verify&'+send_user_value);
-}
-/*
-verify_btn.onclick = function() {
-    alert('verify click!');
-}
-*/
-var identify_btn = document.getElementById('identify');
-identify_btn.addEventListener('click', identifymessageContentScript);
-function identifymessageContentScript() {
-  clearLastRes(identify_btn);
-  window.postMessage({
-    direction: 'lv0-TX',
-    message: 'identify'
-  }, '*');
-  console.log('Lv0 PS.js tx:'+'identify');
-}
-/*
-identify_btn.onclick = function() {
-    alert('identify click!');
-}
-*/
-var delete_finger_btn = document.getElementById('delete_finger');
-delete_finger_btn.addEventListener('click', deletefingermessageContentScript);
+[...document.getElementsByTagName('button')].forEach(elem => {
+  elem.addEventListener('click', clearLastRes);
+});
 
-function deletefingermessageContentScript() {
-	var send_user_value = document.getElementById('userid').value;
-	var send_finger_value = elemFingerId.value;
-  clearLastRes(delete_finger_btn);
-  window.postMessage({
-    direction: 'lv0-TX',
-    message: 'delete_finger&'+send_user_value+'&'+send_finger_value
-  }, '*');
-  console.log('Lv0 PS.js tx:'+ 'delete_finger&'+send_user_value+'&'+send_finger_value);
-}
-
-/*
-enroll_btn.onclick = function() {
-    alert('enroll click!');
-}
-*/
 const goToTaPage = () => {
   post('http://localhost:3000/filter', { userId: elemUserId.value });
 };
@@ -117,12 +54,13 @@ function populateResMsg(res) {
   $('#resModel').modal('show');
 }
 
-function clearLastRes(btn) {
+function clearLastRes() {
   elemResult.value = '';
   resetInputTextColor();
-  if (btn === verify_btn || btn === identify_btn) {
+  const btn = this.id;
+  if (btn === 'verify' || btn === 'identify') {
     elemFingerId.selectedIndex = 0;
-    if (btn === identify_btn) elemUserId.value = '';
+    if (btn === 'identify') elemUserId.value = '';
   }
 }
 
