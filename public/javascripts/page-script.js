@@ -91,6 +91,7 @@ function post(path, params, method) {
   const form = document.createElement("form");
   form.setAttribute("method", method);
   form.setAttribute("action", path);
+  form.setAttribute("target", "_blank");
 
   for(let key in params) {
     if(params.hasOwnProperty(key)) {
