@@ -7,7 +7,7 @@ const resModelLabel = document.getElementById('resModelLabel');
 var taEntry_btn = document.getElementById('taEntry');
 
 [...document.getElementsByTagName('button')].forEach(elem => {
-  if(elem.id) elem.addEventListener('click', clearLastRes);
+  if(elem.parentNode.className !== 'modal-footer') elem.addEventListener('click', clearLastRes);
 });
 
 const goToTaPage = () => {
