@@ -13,23 +13,16 @@
   <body>
     <form class="container">
       <div class="form-row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-6 form-picker">
           <label for="datepicker-start" style="font-size: 20px">Start</label>
           <input id="datepicker-start" value="<%= currDate %>" />
+          <input id="timepicker-start" value="00:00" style="margin-top: 15px" />
         </div>
-        <div class="form-group col-md-6">
+
+        <div class="form-group col-md-6 form-picker">
           <label for="datepicker-end" style="font-size: 20px">End</label>
           <input id="datepicker-end" value="<%= currDate %>" />
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="timepicker-start" style="font-size: 20px" />
-          <input id="timepicker-start" value="00:00" />
-        </div>
-        <div class="form-group col-md-6">
-          <label for="timepicker-end" style="font-size: 20px" />
-          <input id="timepicker-end" value="23:59" />
+          <input id="timepicker-end" value="23:59" style="margin-top: 15px" />
         </div>
       </div>
       <button type="submit" class="btn btn-primary">Query</button>
