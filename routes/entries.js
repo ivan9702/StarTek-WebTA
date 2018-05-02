@@ -1,11 +1,22 @@
 const Entry = require('../models/entry').Entry;
 
+function createDateStr() {
+  const currentdate = new Date();
+  const date = [currentdate.getMonth() + 1, currentdate.getDate(), currentdate.getHours(), currentdate.getMinutes(), currentdate.getSeconds()];
+  const dateArr = date.map((num) => {
+    let str = num.toString();
+    return str = str.length === 2 ? str : '0'.concat(str);
+  });
+  return currentdate.getFullYear() + '-' + dateArr[0] + '-' + dateArr[1];
+}
+
 exports.listAll = (req, res, next) => {
   Entry.all((err, entries) => {
     if (err) return next(err);
     res.render('entries', {
       title: 'All the TA Records',
       entries,
+      currDate: createDateStr()
     });
   });
 };
@@ -24,6 +35,7 @@ exports.filter = (req, res, next) => {
     res.render('entries', {
       title: 'Filtered Records',
       entries,
+      currDate: createDateStr()
     });
   });
 };
