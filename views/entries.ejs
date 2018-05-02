@@ -11,27 +11,29 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <div class="container-fluid">
-      <div class="row justify-content-md-center">
-        <div class="col-sm-3 input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text">Start</span>
-          </div>
-          <input id="datepicker-start" width="176" value="<%= currDate %>" />
+    <form class="container">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="datepicker-start" style="font-size: 20px">Start</label>
+          <input id="datepicker-start" value="<%= currDate %>" />
+        </div>
+        <div class="form-group col-md-6">
+          <label for="datepicker-end" style="font-size: 20px">End</label>
+          <input id="datepicker-end" value="<%= currDate %>" />
         </div>
       </div>
-    </div>
-
-    <div class="container-fluid">
-      <div class="row justify-content-md-center">
-        <div class="col-sm-3 input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text"> End </span>
-          </div>
-          <input id="datepicker-end" width="176" value="<%= currDate %>" />
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="timepicker-start" style="font-size: 20px" />
+          <input id="timepicker-start" value="00:00" />
+        </div>
+        <div class="form-group col-md-6">
+          <label for="timepicker-end" style="font-size: 20px" />
+          <input id="timepicker-end" value="23:59" />
         </div>
       </div>
-    </div>
+      <button type="submit" class="btn btn-primary">Query</button>
+    </form>
 
     <table style="width:50%">
       <tr>
@@ -52,12 +54,18 @@
 
     <script>
       $('#datepicker-start').datepicker({
-          uiLibrary: 'bootstrap4',
-          format: 'yyyy-mm-dd'
+        uiLibrary: 'bootstrap4',
+        format: 'yyyy-mm-dd'
       });
       $('#datepicker-end').datepicker({
-          uiLibrary: 'bootstrap4',
-          format: 'yyyy-mm-dd'
+        uiLibrary: 'bootstrap4',
+        format: 'yyyy-mm-dd'
+      });
+      $('#timepicker-start').timepicker({
+        format: 'HH:MM'
+      });
+      $('#timepicker-end').timepicker({
+        format: 'HH:MM'
       });
     </script>
   </body>
