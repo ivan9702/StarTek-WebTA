@@ -25,7 +25,7 @@
           <input id="timepicker-end" value="23:59" style="margin-top: 15px" />
         </div>
       </div>
-      <button type="submit" class="btn btn-primary">Query</button>
+      <button type="submit" class="btn btn-primary" id="taRecordsQuery">Query</button>
     </form>
 
     <table style="width:50%">
@@ -44,22 +44,7 @@
         </tr>
         <% } %>
     </table>
-
-    <script>
-      $('#datepicker-start').datepicker({
-        uiLibrary: 'bootstrap4',
-        format: 'yyyy-mm-dd'
-      });
-      $('#datepicker-end').datepicker({
-        uiLibrary: 'bootstrap4',
-        format: 'yyyy-mm-dd'
-      });
-      $('#timepicker-start').timepicker({
-        format: 'HH:MM'
-      });
-      $('#timepicker-end').timepicker({
-        format: 'HH:MM'
-      });
-    </script>
+    <% include foot %>
+    <script src='/javascripts/taRecords.js'></script>
   </body>
 </html>

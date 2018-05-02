@@ -1,4 +1,5 @@
 const Entry = require('../models/entry').Entry;
+const pJson = require('../package.json');
 
 function createDateStr() {
   const currentdate = new Date();
@@ -16,7 +17,8 @@ exports.listAll = (req, res, next) => {
     res.render('entries', {
       title: 'All the TA Records',
       entries,
-      currDate: createDateStr()
+      currDate: createDateStr(),
+      version: pJson.version
     });
   });
 };
@@ -35,7 +37,8 @@ exports.filter = (req, res, next) => {
     res.render('entries', {
       title: 'Filtered Records',
       entries,
-      currDate: createDateStr()
+      currDate: createDateStr(),
+      version: pJson.version
     });
   });
 };
