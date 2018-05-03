@@ -1,23 +1,12 @@
 const Entry = require('../models/entry').Entry;
 const pJson = require('../package.json');
 
-function createDateStr() {
-  const currentdate = new Date();
-  const date = [currentdate.getMonth() + 1, currentdate.getDate(), currentdate.getHours(), currentdate.getMinutes(), currentdate.getSeconds()];
-  const dateArr = date.map((num) => {
-    let str = num.toString();
-    return str = str.length === 2 ? str : '0'.concat(str);
-  });
-  return currentdate.getFullYear() + '-' + dateArr[0] + '-' + dateArr[1];
-}
-
 exports.listAll = (req, res, next) => {
   Entry.all((err, entries) => {
     if (err) return next(err);
     res.render('entries', {
       title: 'All the TA Records',
       entries,
-      currDate: createDateStr(),
       version: pJson.version
     });
   });
@@ -32,16 +21,29 @@ exports.addEntry = (req, res, next) => {
 };
 
 exports.filter = (req, res, next) => {
-  Entry.filter({
-    userId: req.body.userId,
+  const { userId } = req.body;
+  const conditions = {
+    userId,
     dtStart: req.body.dtStart,
-    dtEnd: req.body.dtEnd
-  }, (err, entries) => {
+    dtEnd: req.body.dtEnd,
+  };
+
+  Entry.filter(conditions, (err, entries) => {
     if (err) return next(err);
     res.render('entries', {
       title: 'Filtered Records',
+      userId,
       entries,
-      currDate: createDateStr(),
+      dateTime: {
+        date: {
+          start: conditions.dtStart.slice(0, 10),
+          end: conditions.dtEnd.slice(0, 10),
+        },
+        time: {
+          start: conditions.dtStart.slice(11, 16),
+          end: conditions.dtEnd.slice(11, 16)
+        }
+      },
       version: pJson.version
     });
   });
