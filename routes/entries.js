@@ -32,7 +32,11 @@ exports.addEntry = (req, res, next) => {
 };
 
 exports.filter = (req, res, next) => {
-  Entry.filter({ userId: req.body.userId, date: req.body.date }, (err, entries) => {
+  Entry.filter({
+    userId: req.body.userId,
+    dtStart: req.body.dtStart,
+    dtEnd: req.body.dtEnd
+  }, (err, entries) => {
     if (err) return next(err);
     res.render('entries', {
       title: 'Filtered Records',

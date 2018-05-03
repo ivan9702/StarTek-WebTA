@@ -26,9 +26,13 @@ class Entry {
       sqlExp.unshift(` id = (?) `);
       sqlParams.unshift(data.userId);
     }
-    if (data.date) {
-      sqlExp.unshift(` dateTime LIKE (?) `);
-      sqlParams.unshift(`${data.date}%`);
+    if (data.dtStart) {
+      sqlExp.unshift(` dateTime >= datetime(?) `);
+      sqlParams.unshift(`${data.dtStart}`);
+    }
+    if (data.dtEnd) {
+      sqlExp.unshift(` dateTime <= datetime(?) `);
+      sqlParams.unshift(`${data.dtEnd}`);
     }
 
     const whereClause = sqlExp.join('AND');

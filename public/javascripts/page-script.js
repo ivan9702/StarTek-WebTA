@@ -11,7 +11,12 @@ var taEntry_btn = document.getElementById('taEntry');
 });
 
 const goToTaPage = () => {
-  post('http://localhost:3000/filter', { userId: elemUserId.value });
+  const currDate = createTimeStr().slice(0, 10);
+  post('http://localhost:3000/filter', {
+    userId: elemUserId.value,
+    dtStart: `${currDate} 00:00`,
+    dtEnd: `${currDate} 23:59`,
+  });
 };
 
 const updateModelFooterBtn = (res) => {
