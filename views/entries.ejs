@@ -12,20 +12,20 @@
   </head>
   <body>
     <% if (title !== 'All the TA Records')  { %>
-      <div class="container">
+      <div class="container" style="width:60%">
         <div class="row">
           <form class="container">
             <div class="form-row">
               <div class="form-group col-md-6 form-picker">
                 <label for="datepicker-start" style="font-size: 20px">Start</label>
-                <input id="datepicker-start" value="<%= dateTime.date.start %>" />
-                <input id="timepicker-start" value="<%= dateTime.time.start %>" style="margin-top: 15px" />
+                <input id="datepicker-start" value="<%= dateTime.date.start %>" readonly />
+                <input id="timepicker-start" value="<%= dateTime.time.start %>" style="margin-top: 15px" readonly />
               </div>
 
               <div class="form-group col-md-6 form-picker">
                 <label for="datepicker-end" style="font-size: 20px">End</label>
-                <input id="datepicker-end" value="<%= dateTime.date.end %>" />
-                <input id="timepicker-end" value="<%= dateTime.time.end %>" style="margin-top: 15px" />
+                <input id="datepicker-end" value="<%= dateTime.date.end %>" readonly />
+                <input id="timepicker-end" value="<%= dateTime.time.end %>" style="margin-top: 15px" readonly />
               </div>
             </div>
           </form>
