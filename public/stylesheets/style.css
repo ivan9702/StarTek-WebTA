@@ -42,3 +42,9 @@ table, th, td {
 div table {
   margin: 10px auto;
 }
+
+caption {
+  display: table-caption;
+  text-align: center;
+  caption-side: top;
+}
