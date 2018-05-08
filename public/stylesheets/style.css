@@ -48,3 +48,8 @@ caption {
   text-align: center;
   caption-side: top;
 }
+
+.row {
+  justify-content: space-around;
+  align-items: baseline;
+}

@@ -14,6 +14,7 @@ const goToTaPage = () => {
   const currDate = createTimeStr().slice(0, 10);
   post('http://localhost:3000/filter', {
     userId: elemUserId.value,
+    listAll: 'true',
     dtStart: `${currDate} 00:00`,
     dtEnd: `${currDate} 23:59`,
   });
