@@ -32,5 +32,5 @@ BtnQuery.addEventListener('click', () => {
     dtStart: `${dateStart.value} ${timeStart.value}`,
     dtEnd: `${dateEnd.value} ${timeEnd.value}`,
     listAll: listAllChk.checked,
-  });
+  }, false);
 });

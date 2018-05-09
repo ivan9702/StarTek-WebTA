@@ -17,7 +17,7 @@ const goToTaPage = () => {
     listAll: 'true',
     dtStart: `${currDate} 00:00`,
     dtEnd: `${currDate} 23:59`,
-  });
+  }, true);
 };
 
 const updateModelFooterBtn = (res) => {
