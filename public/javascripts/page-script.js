@@ -1,13 +1,11 @@
 const elemUserId = document.getElementById('userid');
 const elemFingerId = document.getElementById('fingerid');
 const elemResult = document.getElementById('results');
-const modalResDiv = document.getElementById('modalResDiv');
-const resModelLabel = document.getElementById('resModelLabel');
 
 var taEntry_btn = document.getElementById('taEntry');
 
 [...document.getElementsByTagName('button')].forEach(elem => {
-  if(elem.parentNode.className !== 'modal-footer') elem.addEventListener('click', clearLastRes);
+  if(elem.id !== 'taEntry') elem.addEventListener('click', clearLastRes);
 });
 
 const goToTaPage = () => {
@@ -18,6 +16,7 @@ const goToTaPage = () => {
     dtStart: `${currDate} 00:00`,
     dtEnd: `${currDate} 23:59`,
   }, true);
+  taEntry_btn.style.visibility = 'hidden';
 };
 
 const updateModelFooterBtn = (res) => {
@@ -54,10 +53,6 @@ function populateResMsg(res) {
     elemUserId.value = res.data.userId || res.data.clientUserId;
     saveTaRecord(res.data.userId || res.data.clientUserId, timeStr);
   }
-  modalResDiv.style.color = 'red';
-  modalResDiv.innerHTML = `<h5>${res.message}</h5>`;
-  resModelLabel.innerHTML = `<h5>${timeStr}</h5>`;
-  $('#resModel').modal('show');
 }
 
 function clearLastRes() {
