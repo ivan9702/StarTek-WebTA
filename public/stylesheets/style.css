@@ -53,3 +53,9 @@ caption {
   justify-content: space-around;
   align-items: baseline;
 }
+
+#fmtDtStr {
+  color: red;
+  text-align: center;
+  font-weight: bold;
+}

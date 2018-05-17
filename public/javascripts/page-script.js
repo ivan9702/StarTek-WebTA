@@ -1,6 +1,7 @@
 const elemUserId = document.getElementById('userid');
 const elemFingerId = document.getElementById('fingerid');
 const elemResult = document.getElementById('results');
+const elemDtStr = document.getElementById('fmtDtStr');
 
 var taEntry_btn = document.getElementById('taEntry');
 
@@ -41,7 +42,7 @@ elemFingerId.onfocus = elemUserId.onfocus = resetInputTextColor;
 function populateResMsg(res) {
   elemResult.style.color = 'red';
   const timeStr = createTimeStr();
-  elemResult.value = `${res.message}\n現在時刻 ${createResTimeStr()}`;
+  elemResult.value = `${res.message}`;
 
   if ( res.data && res.data.fpIndex ) {
     elemFingerId.style.color = 'red';
@@ -53,10 +54,12 @@ function populateResMsg(res) {
     elemUserId.value = res.data.userId || res.data.clientUserId;
     saveTaRecord(res.data.userId || res.data.clientUserId, timeStr);
   }
+  elemDtStr.value = `現在時刻 ${createResTimeStr()}`;
 }
 
 function clearLastRes() {
   elemResult.value = '';
+  elemDtStr.value = '';
   resetInputTextColor();
   const btn = this.id;
   if (btn === 'verify' || btn === 'identify') {
