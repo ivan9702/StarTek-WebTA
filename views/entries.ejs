@@ -37,6 +37,9 @@
           </div>
           <div>
             <button type="submit" class="btn btn-primary" id="taRecordsQuery">Query</button>
+            <a href="#" id="export" role='button' class="btn btn-primary">
+              Save
+            </a>
           </div>
         </div>
       </div>
@@ -90,10 +93,6 @@
             <% } %>
           <% } %>
         </table>
-      </div>
-      <div style="text-align:center;">
-        <a href="#" id ="export" role='button'>Click On This Link To Export The Table Data into a CSV File
-        </a>
       </div>
     <% include foot %>
     <script src='/javascripts/postQuery.js'></script>
