@@ -40,8 +40,8 @@ elemFingerId.onfocus = elemUserId.onfocus = resetInputTextColor;
 
 function populateResMsg(res) {
   elemResult.style.color = 'red';
-  elemResult.value = res.message;
   const timeStr = createTimeStr();
+  elemResult.value = `${res.message}\n現在時刻 ${createResTimeStr()}`;
 
   if ( res.data && res.data.fpIndex ) {
     elemFingerId.style.color = 'red';
@@ -77,6 +77,15 @@ function createTimeStr() {
     return str = str.length === 2 ? str : '0'.concat(str);
   });
   return currentdate.getFullYear() + '-' + dateTimeArr[0] + '-' + dateTimeArr[1] + ' ' + dateTimeArr[2] + ':' + dateTimeArr[3] + ':' + dateTimeArr[4];
+}
+
+function createResTimeStr() {
+  const dayNamesTw = [
+    '日', '一', '二', '三', '四', '五', '六',
+  ];
+  const dateTime = new Date();
+
+  return `${dateTime.getFullYear()}年${dateTime.getMonth() + 1}月${dateTime.getDate()}日 (${dayNamesTw[dateTime.getDay()]}) ${dateTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
 }
 
 function saveTaRecord(userId, dateTime) {
