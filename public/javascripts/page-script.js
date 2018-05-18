@@ -5,7 +5,9 @@ const elemDtStr = document.getElementById('fmtDtStr');
 
 var taEntry_btn = document.getElementById('taEntry');
 
-[...document.getElementsByTagName('button')].forEach(elem => {
+const btns = document.getElementsByTagName('button');
+const btnsArr = Array.prototype.slice.call(btns, 0);
+btnsArr.forEach( function (elem) {
   if(elem.id !== 'taEntry') elem.addEventListener('click', clearLastRes);
 });
 
