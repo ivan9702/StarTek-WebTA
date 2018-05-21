@@ -1,11 +1,19 @@
 const sqlite3 = require('sqlite3').verbose();
 
-const dbName = 'ta.sqlite';
+const dbName = 'taNew4.sqlite';
 const db = new sqlite3.Database(dbName);
 
 db.serialize(() => {
-  const sql = 'CREATE TABLE IF NOT EXISTS entries (No integer primary key, id TEXT, dateTime TEXT)';
-  db.run(sql);
+  const sqls = [
+    "CREATE TABLE IF NOT EXISTS `Privilege` (`PrivilegeId` INTEGER NOT NULL, `Name` TEXT NOT NULL UNIQUE, PRIMARY KEY (`PrivilegeId`))",
+    "CREATE TABLE IF NOT EXISTS `Location` (`LocationId` INTEGER NOT NULL, `IpAddress` TEXT NOT NULL UNIQUE, PRIMARY KEY (`LocationId`));",
+    "CREATE TABLE IF NOT EXISTS `Department` (`DepartmentId` INTEGER NOT NULL, `Name` TEXT NOT NULL UNIQUE, PRIMARY KEY (`DepartmentId`))",
+    "CREATE TABLE IF NOT EXISTS `User` (`UserId` INTEGER NOT NULL, `UserName` TEXT NOT NULL UNIQUE, `DepartmentId` INTEGER, `PrivilegeId` INTEGER NOT NULL, PRIMARY KEY (`UserId`), FOREIGN KEY (`DepartmentId`) REFERENCES `Department` (`DepartmentId`), FOREIGN KEY (`PrivilegeId`) REFERENCES `Privilege` (`PrivilegeId`))",
+    "CREATE TABLE IF NOT EXISTS `Entry` (`EntryId` INTEGER NOT NULL, `UserId` INTEGER NOT NULL, `DateTime` DATETIME NOT NULL, `LocationId` INTEGER NOT NULL, PRIMARY KEY (`EntryId`), FOREIGN KEY (`UserId`) REFERENCES `User` (`UserId`), FOREIGN KEY (`LocationId`) REFERENCES `Location` (`LocationId`))"
+  ];
+  sqls.forEach(sql => {
+    db.run(sql);
+  });
 });
 
 class Entry {
