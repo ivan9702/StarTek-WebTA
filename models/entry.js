@@ -1,7 +1,6 @@
 const sqlite3 = require('sqlite3').verbose();
 
-const dbName = 'taNew4.sqlite';
-const db = new sqlite3.Database(dbName);
+const { db } = require('./db');
 
 db.serialize(() => {
   const sqls = [
@@ -49,5 +48,4 @@ class Entry {
   }
 }
 
-module.exports = db;
 module.exports.Entry = Entry;
