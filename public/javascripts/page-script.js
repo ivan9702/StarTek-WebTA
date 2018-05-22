@@ -34,7 +34,7 @@ window.addEventListener('message', function(event) {
   const msg = event.data.response;
   if (msg && event.origin === 'http://localhost:3000') {
     console.log(`message from CS: ${JSON.stringify(msg)}`);
-    updateModelFooterBtn(msg);
+    if (taEntry_btn) updateModelFooterBtn(msg);
     populateResMsg(msg);
   }
 });

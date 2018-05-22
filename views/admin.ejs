@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/css/bootstrap.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1 align="center">Welcome to <%= title %></h1>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col-sm-6">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">User ID:</span>
+            </div>
+            <input type="text" class="form-control" id="userid" placeholder="e.g., 1234">
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-md-center">
+        <div class="col-sm-6">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Finger ID:</span>
+            </div>
+            <select id="fingerid" class="form-control">
+              <option value=0>N/A</option>
+              <option value=1>Right Thumb</option>
+              <option value=2>Right Index</option>
+              <option value=3>Right Middle</option>
+              <option value=4>Right Ring</option>
+              <option value=5>Right Little</option>
+              <option value=6>Left Thumb</option>
+              <option value=7>Left Index</option>
+              <option value=8>Left Middle</option>
+              <option value=9>Left Ring</option>
+              <option value=10>Left Little</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-md-center">
+        <div class="col col-md-3">
+          <button type="button" class="btn btn-primary btn-lg btn-block" id="enroll">Enroll</button>
+        </div>
+        <div class="col col-md-3">
+          <button type="button" class="btn btn-primary btn-lg btn-block" id="delete_finger">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col-sm-7">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><strong>Results:</strong></span>
+            </div>
+            <textarea class="form-control" rows="3" id="results" readonly></textarea>
+          </div>
+          <textarea class="form-control" rows="1" id="fmtDtStr" readonly></textarea>
+        </div>
+      </div>
+    </div>
+    <% include foot %>
+    <script src='/javascripts/postQuery.js'></script>
+    <script src='/javascripts/page-script.js'></script>
+    <!-- JavaScript for Bootstrap Modal -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src='/jquery/jquery.slim.min.js'></script>
+    <script src='/javascripts/popper.min.js'></script>
+    <script src='/bootstrap/bootstrap.min.js'></script>
+  </body>
+</html>

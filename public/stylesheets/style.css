@@ -3,6 +3,13 @@ body {
   font: 1.2rem "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+@media (min-width: 1000px) {
+  body {
+    margin: auto;
+    width: 1000px;
+  }
+}
+
 a {
   color: #00B7FF;
 }
@@ -52,10 +59,19 @@ caption {
 .row {
   justify-content: space-around;
   align-items: baseline;
+  margin: 30px 0;
 }
 
 #fmtDtStr {
   color: red;
   text-align: center;
   font-weight: bold;
+}
+
+.input-group-prepend {
+  width: 30%;
+}
+
+.input-group-text {
+  width: 100%;
 }
