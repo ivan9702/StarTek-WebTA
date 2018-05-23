@@ -1,28 +1,19 @@
-const sqlite3 = require('sqlite3').verbose();
-
 const { db } = require('./db');
 
 db.serialize(() => {
-  const sqls = [
-    "CREATE TABLE IF NOT EXISTS `Privilege` (`PrivilegeId` INTEGER NOT NULL, `Name` TEXT NOT NULL UNIQUE, PRIMARY KEY (`PrivilegeId`))",
-    "CREATE TABLE IF NOT EXISTS `Location` (`LocationId` INTEGER NOT NULL, `IpAddress` TEXT NOT NULL UNIQUE, PRIMARY KEY (`LocationId`));",
-    "CREATE TABLE IF NOT EXISTS `Department` (`DepartmentId` INTEGER NOT NULL, `Name` TEXT NOT NULL UNIQUE, PRIMARY KEY (`DepartmentId`))",
-    "CREATE TABLE IF NOT EXISTS `User` (`UserId` INTEGER NOT NULL, `UserName` TEXT NOT NULL UNIQUE, `DepartmentId` INTEGER, `PrivilegeId` INTEGER NOT NULL, PRIMARY KEY (`UserId`), FOREIGN KEY (`DepartmentId`) REFERENCES `Department` (`DepartmentId`), FOREIGN KEY (`PrivilegeId`) REFERENCES `Privilege` (`PrivilegeId`))",
-    "CREATE TABLE IF NOT EXISTS `Entry` (`EntryId` INTEGER NOT NULL, `UserId` INTEGER NOT NULL, `DateTime` DATETIME NOT NULL, `LocationId` INTEGER NOT NULL, PRIMARY KEY (`EntryId`), FOREIGN KEY (`UserId`) REFERENCES `User` (`UserId`), FOREIGN KEY (`LocationId`) REFERENCES `Location` (`LocationId`))"
-  ];
-  sqls.forEach(sql => {
-    db.run(sql);
-  });
+  const sql = "CREATE TABLE IF NOT EXISTS `Entry` (`EntryId` INTEGER NOT NULL, `UserId` INTEGER NOT NULL, `DateTime` DATETIME NOT NULL, `LocationId` INTEGER NOT NULL, PRIMARY KEY (`EntryId`), FOREIGN KEY (`UserId`) REFERENCES `User` (`UserId`), FOREIGN KEY (`LocationId`) REFERENCES `Location` (`LocationId`))";
+  db.run(sql);
 });
 
 class Entry {
   static all(cb) {
-    db.all('SELECT * FROM entries', cb);
+    const sql = "SELECT User.UserName AS id, DateTime AS dateTime FROM Entry JOIN User ON Entry.UserId = User.UserId";
+    db.all(sql, cb);
   }
 
   static create(data, cb) {
-    const sql = 'INSERT INTO entries (id, dateTime) VALUES (?, ?)';
-    db.run(sql, data.userId, data.dateTime, cb);
+    const sql = "INSERT INTO Entry (UserId, DateTime, LocationId) VALUES ( (SELECT UserId FROM User WHERE UserName = ?), ?, (SELECT LocationId FROM Location WHERE IpAddress = ?))";
+    db.run(sql, data.userId, data.dateTime, data.ipAddress, cb);
   }
 
   static filter(data, cb) {
@@ -30,20 +21,20 @@ class Entry {
     let sqlParams = [cb];
 
     if (data.userId) {
-      sqlExp.unshift(` id = (?) `);
+      sqlExp.unshift(` UserId = (SELECT UserId FROM User WHERE UserName = (?)) `);
       sqlParams.unshift(data.userId);
     }
     if (data.dtStart) {
-      sqlExp.unshift(` dateTime >= datetime(?) `);
+      sqlExp.unshift(` DateTime >= datetime(?) `);
       sqlParams.unshift(`${data.dtStart}`);
     }
     if (data.dtEnd) {
-      sqlExp.unshift(` dateTime <= datetime(?) `);
+      sqlExp.unshift(` DateTime <= datetime(?) `);
       sqlParams.unshift(`${data.dtEnd}`);
     }
 
     const whereClause = sqlExp.join('AND');
-    const sql = `SELECT * FROM entries WHERE${whereClause}`;
+    const sql = `SELECT DateTime AS dateTime FROM Entry WHERE${whereClause}`;
     db.all.apply(db, [sql, ...sqlParams]);
   }
 }

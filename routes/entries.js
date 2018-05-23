@@ -1,4 +1,4 @@
-const Entry = require('../models/entry').Entry;
+const { Entry } = require('../models/entry');
 const pJson = require('../package.json');
 
 exports.listAll = (req, res, next) => {
@@ -14,10 +14,11 @@ exports.listAll = (req, res, next) => {
 };
 
 exports.addEntry = (req, res, next) => {
-  const data = req.body;
+  const ipAddress = req.ip.match(/:([\d\.]*$)/)[1];
+  const data = {...req.body, ipAddress};
   Entry.create(data, (err, entry) => {
     if (err) return next(err);
-    res.send('OK');
+    res.status(201).send('A TA record is saved');
   });
 };
 
