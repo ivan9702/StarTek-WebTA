@@ -23,11 +23,12 @@ const timeStart = document.getElementById('timepicker-start');
 const dateEnd = document.getElementById('datepicker-end');
 const timeEnd = document.getElementById('timepicker-end');
 const listAllChk = document.getElementById('listAll');
+const originURL = document.location.toString().replace(/\/[^\/]*$/, '');
 
 listAllChk.checked = listAllChk.value === 'true';
 
 BtnQuery.addEventListener('click', () => {
-  post('http://localhost:3000/filter', {
+  post(originURL + '/filter', {
     userId,
     dtStart: `${dateStart.value} ${timeStart.value}`,
     dtEnd: `${dateEnd.value} ${timeEnd.value}`,

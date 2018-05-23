@@ -3,6 +3,7 @@ const elemFingerId = document.getElementById('fingerid');
 const elemPrivilegeId = document.getElementById('privilegeId');
 const elemResult = document.getElementById('results');
 const elemDtStr = document.getElementById('fmtDtStr');
+const originURL = document.location.toString().replace(/\/[^\/]*$/, '');
 
 var taEntry_btn = document.getElementById('taEntry');
 
@@ -14,7 +15,7 @@ btnsArr.forEach( function (elem) {
 
 const goToTaPage = () => {
   const currDate = createTimeStr().slice(0, 10);
-  post('http://localhost:3000/filter', {
+  post(originURL + '/filter', {
     userId: elemUserId.value,
     listAll: 'true',
     dtStart: `${currDate} 00:00`,
@@ -33,7 +34,7 @@ const updateModelFooterBtn = (res) => {
 
 window.addEventListener('message', function(event) {
   const msg = event.data.response;
-  if (msg && event.origin === 'http://localhost:3000') {
+  if (msg && event.origin === originURL) {
     console.log(`message from CS: ${JSON.stringify(msg)}`);
     if (taEntry_btn) updateModelFooterBtn(msg);
     populateResMsg(msg);
@@ -97,14 +98,14 @@ function createResTimeStr() {
 
 function saveTaRecord(userId, dateTime) {
   const xhr = new XMLHttpRequest();
-  xhr.open('POST', 'http://localhost:3000/addEntry');
+  xhr.open('POST', originURL + '/addEntry');
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.send(JSON.stringify({userId, dateTime}));
 }
 
 const createUser = () => {
   const xhr = new XMLHttpRequest();
-  xhr.open('POST', 'http://localhost:3000/createUser');
+  xhr.open('POST', originURL + '/createUser');
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.send(JSON.stringify({
     UserName: elemUserId.value,
