@@ -1,5 +1,6 @@
 const elemUserId = document.getElementById('userid');
 const elemFingerId = document.getElementById('fingerid');
+const elemPrivilegeId = document.getElementById('privilegeId');
 const elemResult = document.getElementById('results');
 const elemDtStr = document.getElementById('fmtDtStr');
 
@@ -57,6 +58,7 @@ function populateResMsg(res) {
     saveTaRecord(res.data.userId || res.data.clientUserId, timeStr);
   }
   elemDtStr.value = `現在時刻 ${createResTimeStr()}`;
+  resCodeHandler(res.code);
 }
 
 function clearLastRes() {
@@ -99,3 +101,24 @@ function saveTaRecord(userId, dateTime) {
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.send(JSON.stringify({userId, dateTime}));
 }
+
+const createUser = () => {
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', 'http://localhost:3000/createUser');
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(JSON.stringify({
+    UserName: elemUserId.value,
+    DepartmentId: null,
+    PrivilegeId: elemPrivilegeId.value
+  }));
+}
+
+const resCodeHandler = (code) => {
+  switch (code) {
+    case 20001:
+      createUser();
+      break;
+    default:
+      console.log(`Code: ${code} is not yet handled !!`);
+  }
+};

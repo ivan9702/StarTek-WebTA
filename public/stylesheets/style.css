@@ -75,3 +75,7 @@ caption {
 .input-group-text {
   width: 100%;
 }
+
+.col > button {
+  margin: 5px;
+}

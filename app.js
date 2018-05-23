@@ -27,13 +27,14 @@ app.use('/jquery/jquery.slim.min.js', express.static('node_modules/jquery/dist/j
 app.use('/bootstrap/bootstrap.min.js', express.static('node_modules/bootstrap/dist/js/bootstrap.min.js'));
 
 app.use('/', index);
-app.use('/users', users);
 
 app.post('/addEntry', entries.addEntry);
 app.post('/filter', entries.filter);
 app.get('/listAll', entries.listAll);
 
 app.get('/admin', admin.home);
+
+app.post('/createUser', users.createUser);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

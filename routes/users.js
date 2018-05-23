@@ -1,9 +1,15 @@
-var express = require('express');
-var router = express.Router();
+const { User } = require('../models/user');
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
-
-module.exports = router;
+exports.createUser = (req, res, next) => {
+  const data = req.body;
+  User.create(data, err => {
+    if (err) {
+      if (err.errno === 19) {
+        return res.status(200).send('User already exists');
+      } else {
+        return next(err);
+      }
+    }
+    res.status(201).send('User is created');
+  });
+};
