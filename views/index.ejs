@@ -10,22 +10,25 @@
     <h1 align="center">Welcome to <%= title %></h1>
     <div class="container-fluid">
       <div class="row justify-content-md-center">
-        <div class="col-sm-3">
-          <button type="button" class="btn btn-primary btn-lg btn-block" id="enroll">enroll</button>
-          <button type="button" class="btn btn-primary btn-lg btn-block" id="verify">verfiy</button>
-          <button type="button" class="btn btn-primary btn-lg btn-block" id="identify">identify</button>
-          <button type="button" class="btn btn-primary btn-lg btn-block" id="delete_finger">delete_finger</button>
+        <div class="input-group mb-3 col-sm-6">
+          <div class="input-group-prepend">
+            <span class="input-group-text">上班 / 下班</span>
+          </div>
+          <select class="form-control">
+            <option value=0>上班</option>
+            <option value=1>下班</option>
+          </select>
         </div>
-
-        <div class="col-sm-4">
+      </div>
+      <div class="row justify-content-md-center">
+        <div class="col-sm-6">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">User ID:</span>
             </div>
             <input type="text" class="form-control" id="userid" placeholder="e.g., 1234">
           </div>
-
-          <div class="input-group mb-3">
+          <div class="input-group mb-3" style="display: none">
             <div class="input-group-prepend">
               <span class="input-group-text">Finger ID:</span>
             </div>
@@ -44,6 +47,17 @@
             </select>
           </div>
           <button type="button" class="btn btn-primary btn-block" id="taEntry" style="visibility: hidden">Go to TA Records</button>
+        </div>
+      </div>
+      <div class="row justify-content-md-center">
+        <div class="col col-md-3">
+          <button type="button" class="btn btn-primary btn-lg btn-block" id="identify">Verify</button>
+        </div>
+        <div class="col col-md-3">
+          <button type="button" class="btn btn-primary btn-lg btn-block" id="verify">查詢</button>
+        </div>
+        <div class="col col-md-3">
+          <button type="button" class="btn btn-primary btn-lg btn-block" id="delete_finger">Admin</button>
         </div>
       </div>
     </div>
