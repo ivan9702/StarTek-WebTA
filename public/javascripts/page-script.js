@@ -74,6 +74,7 @@ function populateResMsg(res) {
   if ( res.data && res.data.fpIndex ) {
     elemFingerId.style.color = 'red';
     elemFingerId.selectedIndex = res.data.fpIndex;
+    saveTaRecord(elemUserId.value, timeStr);
   }
 
   if ( res.data && (res.data.userId || res.data.clientUserId)) {
@@ -92,7 +93,6 @@ function clearLastRes() {
   const btn = this.id;
   if (btn === 'verify' || btn === 'identify') {
     elemFingerId.selectedIndex = 0;
-    if (btn === 'identify') elemUserId.value = '';
   }
 }
 
