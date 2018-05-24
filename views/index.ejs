@@ -10,17 +10,6 @@
     <h1 align="center">Welcome to <%= title %></h1>
     <div class="container-fluid">
       <div class="row justify-content-md-center">
-        <div class="input-group mb-3 col-sm-6">
-          <div class="input-group-prepend">
-            <span class="input-group-text">上班 / 下班</span>
-          </div>
-          <select class="form-control">
-            <option value=0>上班</option>
-            <option value=1>下班</option>
-          </select>
-        </div>
-      </div>
-      <div class="row justify-content-md-center">
         <div class="col-sm-6">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -46,15 +35,17 @@
               <option value=10>Left Little</option>
             </select>
           </div>
-          <button type="button" class="btn btn-primary btn-block" id="legacyTaEntry" style="visibility: hidden">Go to TA Records</button>
         </div>
       </div>
       <div class="row justify-content-md-center">
         <div class="col col-md-3">
-          <button type="button" class="btn btn-primary btn-lg btn-block" id="identify">Verify</button>
+          <button type="button" class="btn btn-primary btn-lg btn-block" id="identify">Clock-In</button>
         </div>
         <div class="col col-md-3">
-          <button type="button" class="btn btn-primary btn-lg btn-block" id="taEntry">查詢</button>
+          <button type="button" class="btn btn-primary btn-lg btn-block" id="identify">Clock-Out</button>
+        </div>
+        <div class="col col-md-3">
+          <button type="button" class="btn btn-primary btn-lg btn-block" id="taEntry">Query</button>
         </div>
         <div class="col col-md-3">
           <button type="button" class="btn btn-primary btn-lg btn-block" id="adminEntry">Admin</button>
