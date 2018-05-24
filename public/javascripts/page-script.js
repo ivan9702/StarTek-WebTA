@@ -23,6 +23,23 @@ const goToTaPage = () => {
   });
 };
 
+const goToAdminPage = () => {
+  post(originURL + '/admin');
+};
+
+const goToPage = (page) => {
+  switch (page) {
+    case '/admin':
+      goToAdminPage();
+      break;
+    case '/filter':
+      goToTaPage();
+      break;
+    default:
+      console.log('Stay Here');
+  }
+};
+
 const updateModelFooterBtn = (res) => {
   taEntry_btn.style.visibility = 'hidden';
   if ( res.code === 20003 ) {
@@ -37,7 +54,7 @@ window.addEventListener('message', function(event) {
   if (msg && event.origin === originURL) {
     console.log(`message from CS: ${JSON.stringify(msg)}`);
     populateResMsg(msg);
-    if (passCode.includes(msg.code) && msg.leaveIdxPage) goToTaPage();
+    if (passCode.includes(msg.code)) goToPage(msg.goToPage);
   }
 });
 

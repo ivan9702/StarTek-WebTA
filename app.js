@@ -32,7 +32,7 @@ app.post('/addEntry', entries.addEntry);
 app.post('/filter', entries.filter);
 app.get('/listAll', entries.listAll);
 
-app.get('/admin', admin.home);
+app.post('/admin', admin.home);
 
 app.post('/createUser', users.createUser);
 
