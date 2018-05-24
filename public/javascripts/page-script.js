@@ -13,6 +13,12 @@ btnsArr.forEach( function (elem) {
   if(elem.id !== 'taEntry') elem.addEventListener('click', clearLastRes);
 });
 
+(() => {
+  elemUserId.value = '';
+  elemResult.value = '';
+  elemDtStr.value = '';
+})();
+
 const goToTaPage = () => {
   const currDate = createTimeStr().slice(0, 10);
   post(originURL + '/filter', {
