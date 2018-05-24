@@ -20,8 +20,7 @@ const goToTaPage = () => {
     listAll: 'true',
     dtStart: `${currDate} 00:00`,
     dtEnd: `${currDate} 23:59`,
-  }, true);
-  taEntry_btn.style.visibility = 'hidden';
+  });
 };
 
 const updateModelFooterBtn = (res) => {
@@ -34,10 +33,11 @@ const updateModelFooterBtn = (res) => {
 
 window.addEventListener('message', function(event) {
   const msg = event.data.response;
+  const passCode = [ 20003, 20004 ];
   if (msg && event.origin === originURL) {
     console.log(`message from CS: ${JSON.stringify(msg)}`);
-    if (taEntry_btn) updateModelFooterBtn(msg);
     populateResMsg(msg);
+    if (passCode.includes(msg.code) && msg.leaveIdxPage) goToTaPage();
   }
 });
 
