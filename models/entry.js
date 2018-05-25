@@ -7,7 +7,7 @@ db.serialize(() => {
 
 class Entry {
   static all(cb) {
-    const sql = "SELECT User.UserName AS id, DateTime AS dateTime FROM Entry JOIN User ON Entry.UserId = User.UserId";
+    const sql = "SELECT User.UserName AS id, Entry.DateTime AS dateTime, Location.IpAddress AS location FROM Entry JOIN User JOIN Location ON Entry.UserId = User.UserId AND Entry.LocationId = Location.LocationId";
     db.all(sql, cb);
   }
 
@@ -34,7 +34,7 @@ class Entry {
     }
 
     const whereClause = sqlExp.join('AND');
-    const sql = `SELECT DateTime AS dateTime FROM Entry WHERE${whereClause}`;
+    const sql = `SELECT DateTime AS dateTime, Location.IpAddress AS location FROM Entry JOIN Location WHERE${whereClause}`;
     db.all.apply(db, [sql, ...sqlParams]);
   }
 }

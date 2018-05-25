@@ -61,6 +61,7 @@
                 <th>Date</th>
                 <% if (listAll === 'true') {%>
                   <th>TA Time</th>
+                  <th>Location/IP</th>
                 <% } else { %>
                   <th>Start Time</th>
                   <th>End Time</th>
@@ -79,6 +80,9 @@
                   </td>
                   <td>
                     <%= entries[i].dateTime.slice(11, 19) %>
+                  </td>
+                  <td>
+                    <%= entries[i].location %>
                   </td>
               </tr>
             <% } %>
