@@ -1,7 +1,7 @@
 const { db } = require('./db');
 
 db.serialize(() => {
-  const sql = "CREATE TABLE IF NOT EXISTS `Entry` (`EntryId` INTEGER NOT NULL, `UserId` INTEGER NOT NULL, `DateTime` DATETIME NOT NULL, `LocationId` INTEGER NOT NULL, PRIMARY KEY (`EntryId`), FOREIGN KEY (`UserId`) REFERENCES `User` (`UserId`), FOREIGN KEY (`LocationId`) REFERENCES `Location` (`LocationId`))";
+  const sql = "CREATE TABLE IF NOT EXISTS `Entry` (`EntryId` INTEGER NOT NULL, `UserId` INTEGER NOT NULL, `DateTime` DATETIME NOT NULL, `LocationId` INTEGER NOT NULL, `EventId` INTEGER, PRIMARY KEY (`EntryId`), FOREIGN KEY (`UserId`) REFERENCES `User` (`UserId`), FOREIGN KEY(`EventId`) REFERENCES `Event`(`EventId`), FOREIGN KEY (`LocationId`) REFERENCES `Location` (`LocationId`))";
   db.run(sql);
 });
 
@@ -12,8 +12,8 @@ class Entry {
   }
 
   static create(data, cb) {
-    const sql = "INSERT INTO Entry (UserId, DateTime, LocationId) VALUES ( (SELECT UserId FROM User WHERE UserName = ?), ?, (SELECT LocationId FROM Location WHERE IpAddress = ?))";
-    db.run(sql, data.userId, data.dateTime, data.ipAddress, cb);
+    const sql = "INSERT INTO Entry (UserId, DateTime, LocationId, EventId) VALUES ( (SELECT UserId FROM User WHERE UserName = ?), ?, (SELECT LocationId FROM Location WHERE IpAddress = ?), (SELECT EventId FROM Event WHERE Name = ?))";
+    db.run(sql, data.userId, data.dateTime, data.ipAddress, data.event, cb);
   }
 
   static filter(data, cb) {

@@ -74,13 +74,13 @@ function populateResMsg(res) {
   if ( res.data && res.data.fpIndex ) {
     elemFingerId.style.color = 'red';
     elemFingerId.selectedIndex = res.data.fpIndex;
-    if (res.goToPage === '') saveTaRecord(elemUserId.value, timeStr);
+    if (res.goToPage === '') saveTaRecord(elemUserId.value, timeStr, res.clkEvent);
   }
 
   if ( res.data && (res.data.userId || res.data.clientUserId)) {
     elemUserId.style.color = 'red';
     elemUserId.value = res.data.userId || res.data.clientUserId;
-    if (res.goToPage === '') saveTaRecord(res.data.userId || res.data.clientUserId, timeStr);
+    if (res.goToPage === '') saveTaRecord(res.data.userId || res.data.clientUserId, timeStr, res.clkEvent);
   }
   if (res.goToPage === '') resCodeHandler(res.code);
 }
@@ -117,11 +117,11 @@ function createResTimeStr() {
   return `${dateTime.getFullYear()}年${dateTime.getMonth() + 1}月${dateTime.getDate()}日 (${dayNamesTw[dateTime.getDay()]}) ${dateTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
 }
 
-function saveTaRecord(userId, dateTime) {
+function saveTaRecord(userId, dateTime, event) {
   const xhr = new XMLHttpRequest();
   xhr.open('POST', originURL + '/addEntry');
   xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.send(JSON.stringify({userId, dateTime}));
+  xhr.send(JSON.stringify({userId, dateTime, event}));
 }
 
 const createUser = () => {
