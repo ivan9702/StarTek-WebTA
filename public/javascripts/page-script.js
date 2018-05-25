@@ -82,13 +82,11 @@ function populateResMsg(res) {
     elemUserId.value = res.data.userId || res.data.clientUserId;
     if (res.goToPage === '') saveTaRecord(res.data.userId || res.data.clientUserId, timeStr);
   }
-  elemDtStr.value = `現在時刻 ${createResTimeStr()}`;
   if (res.goToPage === '') resCodeHandler(res.code);
 }
 
 function clearLastRes() {
   elemResult.value = '';
-  elemDtStr.value = '';
   resetInputTextColor();
   const btn = this.id;
   if (btn === 'verify' || btn === 'identify') {
@@ -146,3 +144,10 @@ const resCodeHandler = (code) => {
       console.log(`Code: ${code} is not yet handled !!`);
   }
 };
+
+function startTime () {
+  elemDtStr.value = `${createTimeStr().slice(0, -3)}`;
+  setTimeout(startTime, 500);
+}
+
+startTime();
