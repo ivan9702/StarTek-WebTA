@@ -74,16 +74,16 @@ function populateResMsg(res) {
   if ( res.data && res.data.fpIndex ) {
     elemFingerId.style.color = 'red';
     elemFingerId.selectedIndex = res.data.fpIndex;
-    saveTaRecord(elemUserId.value, timeStr);
+    if (res.goToPage === '') saveTaRecord(elemUserId.value, timeStr);
   }
 
   if ( res.data && (res.data.userId || res.data.clientUserId)) {
     elemUserId.style.color = 'red';
     elemUserId.value = res.data.userId || res.data.clientUserId;
-    saveTaRecord(res.data.userId || res.data.clientUserId, timeStr);
+    if (res.goToPage === '') saveTaRecord(res.data.userId || res.data.clientUserId, timeStr);
   }
   elemDtStr.value = `現在時刻 ${createResTimeStr()}`;
-  resCodeHandler(res.code);
+  if (res.goToPage === '') resCodeHandler(res.code);
 }
 
 function clearLastRes() {
