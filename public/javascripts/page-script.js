@@ -5,7 +5,7 @@ const elemResult = document.getElementById('results');
 const elemDtStr = document.getElementById('fmtDtStr');
 const originURL = document.location.toString().replace(/\/[^\/]*$/, '');
 
-var taEntry_btn = document.getElementById('taEntry');
+var taEntry_btn = document.getElementById('query');
 
 const btns = document.getElementsByTagName('button');
 const btnsArr = Array.prototype.slice.call(btns, 0);
