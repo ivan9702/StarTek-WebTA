@@ -12,8 +12,10 @@ class Entry {
   }
 
   static create(data, cb) {
-    const sql = "INSERT INTO Entry (UserId, DateTime, LocationId, EventId) VALUES ( (SELECT UserId FROM User WHERE UserName = ?), ?, (SELECT LocationId FROM Location WHERE IpAddress = ?), (SELECT EventId FROM Event WHERE Name = ?))";
-    db.run(sql, data.userId, data.dateTime, data.ipAddress, data.event, cb);
+    db.serialize(() => {
+      db.run("INSERT OR IGNORE INTO Location (IpAddress) VALUES ( ? )", data.ipAddress);
+      db.run("INSERT INTO Entry (UserId, DateTime, LocationId, EventId) VALUES ( (SELECT UserId FROM User WHERE UserName = ?), ?, (SELECT LocationId FROM Location WHERE IpAddress = ?), (SELECT EventId FROM Event WHERE Name = ?))", data.userId, data.dateTime, data.ipAddress, data.event, cb);
+    });
   }
 
   static filter(data, cb) {
