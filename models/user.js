@@ -15,6 +15,11 @@ class User {
     const sql = "INSERT INTO User (UserName, DepartmentId, PrivilegeId) VALUES (?, ?, ?)";
     db.run(sql, data.UserName, data.DepartmentId, data.PrivilegeId, cb);
   }
+
+  static allAdmin (data, cb) {
+    const sql = "SELECT UserName AS AdminUser FROM User WHERE PrivilegeId = (SELECT PrivilegeId FROM Privilege WHERE Name = 'admin')";
+    db.all(sql, cb);
+  }
 }
 
 module.exports.User = User;

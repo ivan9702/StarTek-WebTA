@@ -33,6 +33,7 @@ app.post('/filter', entries.filter);
 app.get('/listAll', entries.listAll);
 
 app.post('/admin', admin.home);
+app.get('/queryAdmin', admin.queryAdmin);
 
 app.post('/createUser', users.createUser);
 

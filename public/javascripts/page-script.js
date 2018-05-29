@@ -30,7 +30,9 @@ const goToTaPage = () => {
 };
 
 const goToAdminPage = () => {
-  post(originURL + '/admin');
+  post(originURL + '/admin', {
+    userId: elemUserId.value
+  });
 };
 
 const goToPage = (page) => {
@@ -74,15 +76,16 @@ function populateResMsg(res) {
   if ( res.data && res.data.fpIndex ) {
     elemFingerId.style.color = 'red';
     elemFingerId.selectedIndex = res.data.fpIndex;
-    if (res.goToPage === '') saveTaRecord(elemUserId.value, timeStr, res.clkEvent);
   }
 
   if ( res.data && (res.data.userId || res.data.clientUserId)) {
     elemUserId.style.color = 'red';
     elemUserId.value = res.data.userId || res.data.clientUserId;
-    if (res.goToPage === '') saveTaRecord(res.data.userId || res.data.clientUserId, timeStr, res.clkEvent);
   }
-  if (res.goToPage === '') resCodeHandler(res.code);
+  if (res.goToPage === '') {
+    saveTaRecord(elemUserId.value, timeStr, res.clkEvent);
+    resCodeHandler(res.code);
+  }
 }
 
 function clearLastRes() {
