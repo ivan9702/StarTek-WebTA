@@ -55,13 +55,15 @@
             <caption id="queryUserId">Hello, <%= userId %></caption>
           <% } %>
             <tr>
+              <% if (listAll === 'true') {%>
+                <th>Location/IP</th>
+              <% } %>
               <% if (title === 'All the TA Records') {%>
                 <th>User ID</th>
               <% } %>
                 <th>Date</th>
                 <% if (listAll === 'true') {%>
                   <th>TA Time</th>
-                  <th>Location/IP</th>
                 <% } else { %>
                   <th>Start Time</th>
                   <th>End Time</th>
@@ -70,6 +72,9 @@
           <% if (listAll === 'true') {%>
             <% for (let i = 0; i < entries.length; i++) { %>
               <tr>
+                  <td>
+                    <%= entries[i].location %>
+                  </td>
                 <% if (title === 'All the TA Records') {%>
                   <td>
                     <%= entries[i].id %>
@@ -80,9 +85,6 @@
                   </td>
                   <td>
                     <%= entries[i].dateTime.slice(11, 19) %>
-                  </td>
-                  <td>
-                    <%= entries[i].location %>
                   </td>
               </tr>
             <% } %>
