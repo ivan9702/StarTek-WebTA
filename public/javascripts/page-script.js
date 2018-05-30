@@ -122,10 +122,12 @@ function createResTimeStr() {
 }
 
 function saveTaRecord(userId, dateTime, event) {
-  const xhr = new XMLHttpRequest();
-  xhr.open('POST', originURL + '/addEntry');
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.send(JSON.stringify({userId, dateTime, event}));
+  if (event) {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', originURL + '/addEntry');
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify({userId, dateTime, event}));
+  }
 }
 
 const createUser = () => {
