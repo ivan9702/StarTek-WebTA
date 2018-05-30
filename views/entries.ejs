@@ -55,20 +55,26 @@
             <caption id="queryUserId">Hello, <%= userId %></caption>
           <% } %>
             <tr>
+              <!-- Headers -->
               <% if (listAll === 'true') {%>
                 <th>Location/IP</th>
               <% } %>
               <% if (title === 'All the TA Records') {%>
                 <th>User ID</th>
               <% } %>
+              <% if (listAll === 'true') {%>
+                <th>Name</th>
+              <% } %>
                 <th>Date</th>
                 <% if (listAll === 'true') {%>
-                  <th>TA Time</th>
+                  <th>Time</th>
+                  <th>Event</th>
                 <% } else { %>
                   <th>Start Time</th>
                   <th>End Time</th>
                 <% } %>
             </tr>
+            <!-- List Details -->
           <% if (listAll === 'true') {%>
             <% for (let i = 0; i < entries.length; i++) { %>
               <tr>
@@ -81,14 +87,21 @@
                   </td>
                 <% } %>
                   <td>
+                    <%= entries[i].nameStr %>
+                  </td>
+                  <td>
                     <%= entries[i].dateTime.slice(0, 10) %>
                   </td>
                   <td>
                     <%= entries[i].dateTime.slice(11, 19) %>
                   </td>
+                  <td>
+                    <%= entries[i].event %>
+                  </td>
               </tr>
             <% } %>
           <% } else { %>
+            <!-- List Less -->
             <% for (let i = 0; i < taStarts.length; i++) { %>
               <tr <% if (new Date(taEnds[i].dateTime) - new Date(taStarts[i].dateTime) < 9.5 * 60 * 60 * 1000) { %> style="color: red" <% } %> >
                 <td>
