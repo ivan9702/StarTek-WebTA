@@ -1,7 +1,7 @@
 const { db } = require('./db');
 
 db.serialize(() => {
-  const sql =  "CREATE TABLE IF NOT EXISTS `User` (`UserId` INTEGER NOT NULL, `UserName` TEXT NOT NULL UNIQUE, `DepartmentId` INTEGER, `PrivilegeId` INTEGER NOT NULL, PRIMARY KEY (`UserId`), FOREIGN KEY (`DepartmentId`) REFERENCES `Department` (`DepartmentId`), FOREIGN KEY (`PrivilegeId`) REFERENCES `Privilege` (`PrivilegeId`))";
+  const sql =  "CREATE TABLE IF NOT EXISTS `User` (`UserId` INTEGER NOT NULL UNIQUE, `UserName` TEXT NOT NULL UNIQUE, `NameString`	TEXT NOT NULL, `PrivilegeId` INTEGER NOT NULL, `DepartmentId` INTEGER,  PRIMARY KEY (`UserId`), FOREIGN KEY (`DepartmentId`) REFERENCES `Department` (`DepartmentId`), FOREIGN KEY (`PrivilegeId`) REFERENCES `Privilege` (`PrivilegeId`))";
   db.run(sql);
 });
 
@@ -12,8 +12,8 @@ class User {
   }
 
   static create(data, cb) {
-    const sql = "INSERT INTO User (UserName, DepartmentId, PrivilegeId) VALUES (?, ?, ?)";
-    db.run(sql, data.UserName, data.DepartmentId, data.PrivilegeId, cb);
+    const sql = "INSERT INTO User (UserName, NameString, PrivilegeId, DepartmentId) VALUES (?, ?, ?, ?)";
+    db.run(sql, data.UserName, data.NameString, data.PrivilegeId, data.DepartmentId, cb);
   }
 
   static allAdmin (data, cb) {

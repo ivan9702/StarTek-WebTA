@@ -1,4 +1,5 @@
 const elemUserId = document.getElementById('userid');
+const elemNameStr = document.getElementById('userName');
 const elemFingerId = document.getElementById('fingerid');
 const elemPrivilegeId = document.getElementById('privilegeId');
 const elemResult = document.getElementById('results');
@@ -133,6 +134,7 @@ const createUser = () => {
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.send(JSON.stringify({
     UserName: elemUserId.value,
+    NameString: elemNameStr.value,
     DepartmentId: null,
     PrivilegeId: elemPrivilegeId.value
   }));
