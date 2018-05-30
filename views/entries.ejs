@@ -62,13 +62,15 @@
                 <th>Name</th>
               <% } %>
                 <th>Date</th>
-                <% if (listAll === 'true') {%>
-                  <th>Time</th>
-                  <th>Event</th>
-                <% } else { %>
-                  <th>Start Time</th>
-                  <th>End Time</th>
-                <% } %>
+              <% if (listAll === 'true') {%>
+                <th>Time</th>
+                <th>Event</th>
+              <% } else { %>
+                <th>Start Time</th>
+                <th>Start Time Location</th>
+                <th>End Time</th>
+                <th>End Time Location</th>
+              <% } %>
             </tr>
             <!-- List Details -->
           <% if (listAll === 'true') {%>
@@ -105,7 +107,13 @@
                   <%= taStarts[i].dateTime.slice(11, 19) %>
                 </td>
                 <td>
+                  <%= taStarts[i].location %>
+                </td>
+                <td>
                   <%= taEnds[i].dateTime.slice(11, 19) %>
+                </td>
+                <td>
+                  <%= taEnds[i].location %>
                 </td>
               </tr>
             <% } %>
