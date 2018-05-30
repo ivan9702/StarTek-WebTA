@@ -12,7 +12,7 @@
   </head>
   <body>
     <% if (title !== 'All the TA Records')  { %>
-      <div class="container" style="width:60%">
+      <div class="container" style="width:80%">
         <div class="row">
           <form class="container">
             <div class="form-row">
@@ -50,7 +50,7 @@
       </div>
     <% } %>
       <div id="dvData">
-        <table style="width:60%">
+        <table style="width:80%">
           <% if (title !== 'All the TA Records')  { %>
             <caption id="queryUserId">Hello, <%= userId %></caption>
           <% } %>
@@ -58,11 +58,7 @@
               <!-- Headers -->
               <% if (listAll === 'true') {%>
                 <th>Location/IP</th>
-              <% } %>
-              <% if (title === 'All the TA Records') {%>
-                <th>User ID</th>
-              <% } %>
-              <% if (listAll === 'true') {%>
+                <th>ID</th>
                 <th>Name</th>
               <% } %>
                 <th>Date</th>
@@ -81,11 +77,9 @@
                   <td>
                     <%= entries[i].location %>
                   </td>
-                <% if (title === 'All the TA Records') {%>
                   <td>
                     <%= entries[i].id %>
                   </td>
-                <% } %>
                   <td>
                     <%= entries[i].nameStr %>
                   </td>
