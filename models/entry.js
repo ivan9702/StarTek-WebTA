@@ -36,7 +36,7 @@ class Entry {
     }
 
     const whereClause = sqlExp.join('AND');
-    const sql = `SELECT DateTime AS dateTime, Location.IpAddress AS location FROM Entry JOIN Location WHERE${whereClause}`;
+    const sql = `SELECT DateTime AS dateTime, Location.IpAddress AS location FROM Entry JOIN Location ON Location.LocationId = Entry.LocationId WHERE${whereClause}`;
     db.all.apply(db, [sql, ...sqlParams]);
   }
 }
