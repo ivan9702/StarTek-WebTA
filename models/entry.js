@@ -23,7 +23,7 @@ class Entry {
     let sqlParams = [cb];
 
     if (data.userId) {
-      sqlExp.unshift(` UserId = (SELECT UserId FROM User WHERE UserName = (?)) `);
+      sqlExp.unshift(` User.UserId = (SELECT UserId FROM User WHERE UserName = (?)) `);
       sqlParams.unshift(data.userId);
     }
     if (data.dtStart) {
@@ -36,7 +36,7 @@ class Entry {
     }
 
     const whereClause = sqlExp.join('AND');
-    const sql = `SELECT DateTime AS dateTime, Location.IpAddress AS location FROM Entry JOIN Location ON Location.LocationId = Entry.LocationId WHERE${whereClause}`;
+    const sql = `SELECT DateTime AS dateTime, Location.IpAddress AS location, Event.Name AS event, User.NameString AS nameStr FROM Entry JOIN Location ON Location.LocationId = Entry.LocationId JOIN Event ON Event.EventId = Entry.EventId JOIN User ON User.UserId = Entry.UserId WHERE${whereClause}`;
     db.all.apply(db, [sql, ...sqlParams]);
   }
 }
