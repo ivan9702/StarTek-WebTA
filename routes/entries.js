@@ -1,4 +1,5 @@
 const { Entry } = require('../models/entry');
+const { arrAdminUser } = require('./admin.js');
 const pJson = require('../package.json');
 
 exports.listAll = (req, res, next) => {
@@ -49,6 +50,7 @@ exports.filter = (req, res, next) => {
           end: conditions.dtEnd.slice(11, 16)
         }
       },
+      isAdmin: arrAdminUser.includes(userId),
       home: req.headers.origin,
       version: pJson.version
     };

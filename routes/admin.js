@@ -43,4 +43,4 @@ exports.queryAdmin = (req, res, next) => {
   res.status(200).send(arrAdminUser);
 };
 
-
+exports.arrAdminUser = arrAdminUser;
