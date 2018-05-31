@@ -7,8 +7,15 @@ db.serialize(() => {
 
 class Entry {
   static all(cb) {
-    // FIXME: Get Name String, Event out of DB for /listall
-    const sql = "SELECT User.UserName AS id, Entry.DateTime AS dateTime, Location.IpAddress AS location FROM Entry JOIN User JOIN Location ON Entry.UserId = User.UserId AND Entry.LocationId = Location.LocationId";
+    const sql = ` SELECT Location.IpAddress AS location,
+                        User.UserName AS id,
+                        User.NameString AS nameStr,
+                        Entry.DateTime AS dateTime,
+                        Event.Name AS event
+                  FROM Entry
+                  JOIN Location ON Location.LocationId = Entry.LocationId
+                  JOIN Event ON Event.EventId = Entry.EventId
+                  JOIN User ON User.UserId = Entry.UserId`;
     db.all(sql, cb);
   }
 
