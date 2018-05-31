@@ -52,7 +52,22 @@
       <div id="dvData">
         <table style="width:80%">
           <% if (title !== 'All the TA Records')  { %>
-            <caption id="queryUserId">Hello, <%= userId %></caption>
+            <% if (isAdmin)  { %>
+                <caption>
+                  <div class="row justify-content-md-center">
+                    <div class="col-sm-6">
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">User ID:</span>
+                        </div>
+                        <input type="text" class="form-control" id="queryUserId" value="<%= userId %>">
+                      </div>
+                    </div>
+                  </div>
+                </caption>
+              <% }  else { %>
+                <caption id="queryUserId">Hello, <%= userId %></caption>
+            <% } %>
           <% } %>
             <tr>
               <!-- Headers -->

@@ -17,7 +17,7 @@ $('#timepicker-end').timepicker({
 });
 
 const BtnQuery = document.getElementById('taRecordsQuery');
-const userId = document.getElementById('queryUserId').innerHTML.match('Hello, (.*)')[1];
+const elemUserId = document.getElementById('queryUserId');
 const dateStart = document.getElementById('datepicker-start');
 const timeStart = document.getElementById('timepicker-start');
 const dateEnd = document.getElementById('datepicker-end');
@@ -29,7 +29,7 @@ listAllChk.checked = listAllChk.value === 'true';
 
 BtnQuery.addEventListener('click', () => {
   post(originURL + '/filter', {
-    userId,
+    userId: elemUserId.value || elemUserId.innerHTML.match('Hello, (.*)')[1],
     dtStart: `${dateStart.value} ${timeStart.value}`,
     dtEnd: `${dateEnd.value} ${timeEnd.value}`,
     listAll: listAllChk.checked,
