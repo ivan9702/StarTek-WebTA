@@ -25,7 +25,7 @@ exports.addEntry = (req, res, next) => {
 };
 
 exports.filter = (req, res, next) => {
-  let { userId, listAll, dtStart, dtEnd } = req.body;
+  let { userId, listAll, dtStart, dtEnd, querierId } = req.body;
 
   const conditions = {
     userId,
@@ -39,6 +39,7 @@ exports.filter = (req, res, next) => {
     const renderInfo = {
       title: 'Filtered Records',
       userId,
+      querierId,
       listAll,
       dateTime: {
         date: {
@@ -50,7 +51,7 @@ exports.filter = (req, res, next) => {
           end: conditions.dtEnd.slice(11, 16)
         }
       },
-      isAdmin: arrAdminUser.includes(userId),
+      isAdmin: arrAdminUser.includes(querierId),
       home: req.headers.origin,
       version: pJson.version
     };

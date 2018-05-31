@@ -24,6 +24,7 @@ const goToTaPage = () => {
   const currDate = createTimeStr().slice(0, 10);
   post(originURL + '/filter', {
     userId: elemUserId.value,
+    querierId: elemUserId.value,
     listAll: 'true',
     dtStart: `${currDate} 00:00`,
     dtEnd: `${currDate} 23:59`,
