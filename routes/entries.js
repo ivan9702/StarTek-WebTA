@@ -35,6 +35,24 @@ exports.filter = (req, res, next) => {
   Entry.filter(conditions, (err, entries) => {
     if (err) return next(err);
 
+    const renderInfo = {
+      title: 'Filtered Records',
+      userId,
+      listAll,
+      dateTime: {
+        date: {
+          start: conditions.dtStart.slice(0, 10),
+          end: conditions.dtEnd.slice(0, 10),
+        },
+        time: {
+          start: conditions.dtStart.slice(11, 16),
+          end: conditions.dtEnd.slice(11, 16)
+        }
+      },
+      home: req.headers.origin,
+      version: pJson.version
+    };
+
     if (listAll === 'false') {
       const taStarts = [];
       const taEnds = [];
@@ -49,42 +67,14 @@ exports.filter = (req, res, next) => {
         taEnds.push(entries[entries.length - 1]);
       }
       res.render('entries', {
-        title: 'Filtered Records',
-        userId,
-        listAll,
+        ...renderInfo,
         taStarts,
-        taEnds,
-        dateTime: {
-          date: {
-            start: conditions.dtStart.slice(0, 10),
-            end: conditions.dtEnd.slice(0, 10),
-          },
-          time: {
-            start: conditions.dtStart.slice(11, 16),
-            end: conditions.dtEnd.slice(11, 16)
-          }
-        },
-        home: req.headers.origin,
-        version: pJson.version
+        taEnds
       });
     } else {
       res.render('entries', {
-        title: 'Filtered Records',
-        userId,
-        listAll,
-        entries,
-        dateTime: {
-          date: {
-            start: conditions.dtStart.slice(0, 10),
-            end: conditions.dtEnd.slice(0, 10),
-          },
-          time: {
-            start: conditions.dtStart.slice(11, 16),
-            end: conditions.dtEnd.slice(11, 16)
-          }
-        },
-        home: req.headers.origin,
-        version: pJson.version
+        ...renderInfo,
+        entries
       });
     }
   });
