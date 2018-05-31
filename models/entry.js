@@ -44,7 +44,16 @@ class Entry {
     }
 
     const whereClause = sqlExp.join('AND');
-    const sql = `SELECT DateTime AS dateTime, Location.IpAddress AS location, Event.Name AS event, User.NameString AS nameStr, User.UserName AS id FROM Entry JOIN Location ON Location.LocationId = Entry.LocationId JOIN Event ON Event.EventId = Entry.EventId JOIN User ON User.UserId = Entry.UserId WHERE${whereClause}`;
+    const sql = ` SELECT DateTime AS dateTime,
+                        Location.IpAddress AS location,
+                        Event.Name AS event,
+                        User.NameString AS nameStr,
+                        User.UserName AS id
+                  FROM Entry
+                  JOIN Location ON Location.LocationId = Entry.LocationId
+                  JOIN Event ON Event.EventId = Entry.EventId
+                  JOIN User ON User.UserId = Entry.UserId
+                  WHERE${whereClause}`;
     db.all.apply(db, [sql, ...sqlParams]);
   }
 }
