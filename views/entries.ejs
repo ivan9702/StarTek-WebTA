@@ -137,8 +137,10 @@
         </table>
       </div>
     <% include foot %>
-    <script src='/javascripts/postQuery.js'></script>
-    <script src='/javascripts/taRecords.js'></script>
-    <script src='/javascripts/exportCSV.js'></script>
+    <% if (title !== 'All the TA Records')  { %>
+      <script src='/javascripts/postQuery.js'></script>
+      <script src='/javascripts/taRecords.js'></script>
+      <script src='/javascripts/exportCSV.js'></script>
+    <% } %>
   </body>
 </html>
