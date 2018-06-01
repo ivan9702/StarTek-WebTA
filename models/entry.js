@@ -1,10 +1,5 @@
 const { db } = require('./db');
 
-db.serialize(() => {
-  const sql = "CREATE TABLE IF NOT EXISTS `Entry` (`EntryId` INTEGER NOT NULL, `UserId` INTEGER NOT NULL, `DateTime` DATETIME NOT NULL, `LocationId` INTEGER NOT NULL, `EventId` INTEGER, PRIMARY KEY (`EntryId`), FOREIGN KEY (`UserId`) REFERENCES `User` (`UserId`), FOREIGN KEY(`EventId`) REFERENCES `Event`(`EventId`), FOREIGN KEY (`LocationId`) REFERENCES `Location` (`LocationId`))";
-  db.run(sql);
-});
-
 class Entry {
   static all(cb) {
     const sql = ` SELECT Location.IpAddress AS location,
