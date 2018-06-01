@@ -11,7 +11,7 @@ User.allAdmin(null, (err, adminUser) => {
 });
 
 exports.home = (req, res, next) => {
-  if (!arrAdminUser.includes(req.body.userId)) {
+  if (!arrAdminUser.includes(req.body.userId) && req.method !== 'GET') {
     const idxURL = `${req.protocol}://${req.hostname}:${req.client.localPort}`;
     res.send(`<div style="text-align: center">
                 <h1>
@@ -34,7 +34,8 @@ exports.home = (req, res, next) => {
     res.render('admin', {
       title: 'STARTEK WebTA Admin',
       home: req.headers.origin,
-      version: pJson.version
+      version: pJson.version,
+      enrollAdminOnly: arrAdminUser.length === 0
     });
   }
 };

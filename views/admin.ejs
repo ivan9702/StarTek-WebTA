@@ -58,9 +58,9 @@
             <div class="input-group-prepend">
               <span class="input-group-text">Privilege:</span>
             </div>
-            <select id="privilegeId" class="form-control">
+            <select id="privilegeId" class="form-control" <% if (enrollAdminOnly) { %> disabled <% } %> >
               <option value=2>Normal</option>
-              <option value=1>Admin</option>
+              <option value=1 <% if (enrollAdminOnly) { %> selected="selected" <% } %> >Admin</option>
             </select>
           </div>
         </div>

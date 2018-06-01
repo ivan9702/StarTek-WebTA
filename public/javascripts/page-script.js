@@ -123,7 +123,7 @@ function createResTimeStr() {
 }
 
 function saveTaRecord(userId, dateTime, event) {
-  if (event) {
+  if (event && userId) {
     const xhr = new XMLHttpRequest();
     xhr.open('POST', originURL + '/addEntry');
     xhr.setRequestHeader('Content-Type', 'application/json');
@@ -141,6 +141,11 @@ const createUser = () => {
     DepartmentId: null,
     PrivilegeId: elemPrivilegeId.value
   }));
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 201) {
+      goToPage('/admin');
+    }
+  }
 }
 
 const resCodeHandler = (code) => {
