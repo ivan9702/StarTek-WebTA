@@ -12,8 +12,10 @@ exports.createUser = (req, res, next) => {
         return next(err);
       }
     }
-    arrAdminUser.push(data.UserName);
-    if (arrAdminUser.length === 1) resMsg = 'First admin is created';
+    if (data.PrivilegeId === '1') {
+      arrAdminUser.push(data.UserName);
+      if (arrAdminUser.length === 1) resMsg = 'First admin is created';
+    }
     res.status(201).send(resMsg);
   });
 };
