@@ -142,8 +142,12 @@ const createUser = () => {
     PrivilegeId: elemPrivilegeId.value
   }));
   xhr.onreadystatechange = function () {
-    if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 201) {
-      goToPage('/admin');
+    if (xhr.readyState == XMLHttpRequest.DONE && xhr.response === 'First admin is created') {
+      setTimeout(() => {
+        post(originURL + '/admin', {
+          userId: elemUserId.value
+        });
+      }, 2000);
     }
   }
 }

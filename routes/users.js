@@ -3,6 +3,7 @@ const { arrAdminUser } = require('./admin.js');
 
 exports.createUser = (req, res, next) => {
   const data = req.body;
+  let resMsg = 'User is created';
   User.create(data, err => {
     if (err) {
       if (err.errno === 19) {
@@ -12,6 +13,7 @@ exports.createUser = (req, res, next) => {
       }
     }
     arrAdminUser.push(data.UserName);
-    res.status(201).send('User is created');
+    if (arrAdminUser.length === 1) resMsg = 'First admin is created';
+    res.status(201).send(resMsg);
   });
 };
