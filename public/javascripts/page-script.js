@@ -59,13 +59,13 @@ function getReqData (fpService) {
     case 'enroll':
     case 'delete_finger':
       return {
-        userId: elemUserId.value,
+        userid: elemUserId.value,
         fingerid: elemFingerId.value
       };
       break;
     case 'verify':
       return {
-        userId: elemUserId.value
+        userid: elemUserId.value
       };
       break;
     default:
@@ -80,7 +80,7 @@ function sendRegToWebAPI () {
   const reqData = getReqData(webApiRoute);
   xhr.open('POST', webApiUrl + webApiRoute);
   xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.send(reqData);
+  xhr.send(JSON.stringify(reqData));
   xhr.onreadystatechange = function() {
     if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
       console.log(xhr.response);
