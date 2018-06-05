@@ -5,6 +5,88 @@ const elemPrivilegeId = document.getElementById('privilegeId');
 const elemResult = document.getElementById('results');
 const elemDtStr = document.getElementById('fmtDtStr');
 const originURL = document.location.toString().replace(/\/[^\/]*$/, '');
+const allBtns = document.querySelectorAll('button');
+const webApiUrl = 'http://localhost:5887/api/';
+let redirectTo = '';
+let clkEvent = '';
+let adminUsers = [];
+
+(() => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', originURL + '/queryAdmin');
+    xhr.send();
+    xhr.onreadystatechange = function() {
+      if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+        adminUsers = xhr.response.slice(1, -1).replace(/\"/g, '').split(',');
+      }
+    }
+})();
+
+const selectFPService = btnId => {
+  switch (btnId) {
+    case 'clkIn':
+      redirectTo = '';
+      clkEvent = 'Clock-In';
+      break;
+    case 'clkOut':
+      redirectTo = '';
+      clkEvent = 'Clock-Out';
+      break;
+    case 'query':
+      redirectTo = '/filter';
+      break;
+    case 'adminEntry':
+      if (elemUserId.value && adminUsers.length > 0 && !adminUsers.includes(elemUserId.value)) {
+        populateResMsg({
+          message: `${elemUserId.value} is not an Admin`
+        });
+        return null;
+      }
+      redirectTo = '/admin';
+      break;
+    default:
+      return btnId;
+  }
+  return elemUserId.value ? 'verify' : 'identify';
+};
+
+allBtns.forEach(elem => {
+  elem.addEventListener('click', sendRegToWebAPI);
+});
+
+function getReqData (fpService) {
+  switch (fpService) {
+    case 'enroll':
+    case 'delete_finger':
+      return {
+        userId: elemUserId.value,
+        fingerid: elemFingerId.value
+      };
+      break;
+    case 'verify':
+      return {
+        userId: elemUserId.value
+      };
+      break;
+    default:
+      return {};
+  }
+}
+
+function sendRegToWebAPI () {
+  const xhr = new XMLHttpRequest();
+  const webApiRoute =  selectFPService(this.id);
+  if (!webApiRoute) return null;
+  const reqData = getReqData(webApiRoute);
+  xhr.open('POST', webApiUrl + webApiRoute);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(reqData);
+  xhr.onreadystatechange = function() {
+    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+      console.log(xhr.response);
+    }
+  }
+};
 
 var taEntry_btn = document.getElementById('query');
 
@@ -91,11 +173,13 @@ function populateResMsg(res) {
 }
 
 function clearLastRes() {
-  elemResult.value = '';
-  resetInputTextColor();
-  const btn = this.id;
-  if (btn === 'verify' || btn === 'identify') {
-    elemFingerId.selectedIndex = 0;
+  if (this.id !== 'adminEntry'){
+    elemResult.value = '';
+    resetInputTextColor();
+    const btn = this.id;
+    if (btn === 'verify' || btn === 'identify') {
+      elemFingerId.selectedIndex = 0;
+    }
   }
 }
 
