@@ -80,7 +80,6 @@ function sendRegToWebAPI () {
   const reqData = getReqData(webApiRoute);
   xhr.open('POST', webApiUrl + webApiRoute);
   xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.responseType = 'text';
   xhr.send(JSON.stringify(reqData));
   xhr.onreadystatechange = function() {
     if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
