@@ -84,6 +84,7 @@ function sendRegToWebAPI () {
   xhr.onreadystatechange = function() {
     if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
       console.log(xhr.response);
+      populateResMsg(JSON.parse(xhr.response));
     }
   }
 };
