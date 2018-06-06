@@ -22,6 +22,13 @@ let adminUsers = [];
     }
 })();
 
+(() => {
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', webApiUrl + 'load_fp_srv');
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send();
+})();
+
 const selectFPService = btnId => {
   switch (btnId) {
     case 'clkIn':
