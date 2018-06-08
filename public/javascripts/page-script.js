@@ -81,6 +81,7 @@ function getReqData (fpService) {
 }
 
 function sendRegToWebAPI () {
+  const passCode = [ 20003, 20004 ];
   const xhr = new XMLHttpRequest();
   const webApiRoute =  selectFPService(this.id);
   if (!webApiRoute) return null;
@@ -90,8 +91,9 @@ function sendRegToWebAPI () {
   xhr.send(JSON.stringify(reqData));
   xhr.onreadystatechange = function() {
     if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
-      console.log(xhr.response);
-      populateResMsg(JSON.parse(xhr.response));
+      let msg = JSON.parse(xhr.response);
+      populateResMsg(msg);
+      if (passCode.includes(msg.code)) goToPage(redirectTo);
     }
   }
 };
@@ -174,8 +176,8 @@ function populateResMsg(res) {
     elemUserId.style.color = 'red';
     elemUserId.value = res.data.userId || res.data.clientUserId;
   }
-  if (res.goToPage === '') {
-    saveTaRecord(elemUserId.value, timeStr, res.clkEvent);
+  if (redirectTo === '') {
+    saveTaRecord(elemUserId.value, timeStr, clkEvent);
     resCodeHandler(res.code);
   }
 }
