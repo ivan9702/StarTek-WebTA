@@ -52,7 +52,7 @@ exports.filter = (req, res, next) => {
         }
       },
       isAdmin: arrAdminUser.includes(querierId),
-      home: req.headers.origin,
+      home: req.protocol + '://' + req.headers.host,
       version: pJson.version
     };
 

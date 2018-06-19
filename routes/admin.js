@@ -33,7 +33,7 @@ exports.home = (req, res, next) => {
   } else {
     res.render('admin', {
       title: 'STARTEK WebTA Admin',
-      home: req.headers.origin,
+      home: req.protocol + '://' + req.headers.host,
       version: pJson.version,
       enrollAdminOnly: arrAdminUser.length === 0
     });
