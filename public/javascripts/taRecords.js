@@ -28,13 +28,13 @@ const originURL = document.location.toString().replace(/\/[^\/]*$/, '');
 
 listAllChk.checked = listAllChk.value === 'true';
 
-BtnQuery.addEventListener('click', () => {
+BtnQuery.addEventListener('click', function () {
   const userId = elemUserId.value || elemUserId.innerHTML.match('Hello, (.*)')[1];
   post(originURL + '/filter', {
-    userId,
+    userId: userId,
     querierId: elemQuerierId.textContent,
-    dtStart: `${dateStart.value} ${timeStart.value}`,
-    dtEnd: `${dateEnd.value} ${timeEnd.value}`,
+    dtStart: dateStart.value + ' ' + timeStart.value,
+    dtEnd: dateEnd.value + ' ' + timeEnd.value,
     listAll: listAllChk.checked,
   }, false);
 });
