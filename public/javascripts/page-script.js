@@ -233,7 +233,7 @@ const createUser = function() {
     if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 201) {
       const resJSON = JSON.parse(xhr.response);
       if (resJSON.adminUser.length === 1) {
-        setTimeout(() => {
+        setTimeout(function() {
           post(originURL + '/admin', {
             userId: elemUserId.value
           });

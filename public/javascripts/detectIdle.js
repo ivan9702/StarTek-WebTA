@@ -2,11 +2,11 @@ var idleTime = 0;
 var threshold = 120;
 const enrollBtn = document.getElementById('enroll');
 
-document.addEventListener('keyup', () => {
+document.addEventListener('keyup', function() {
   console.log('document keyup event reset');
   idleTime = 0;
 });
-window.addEventListener('message', () => {
+window.addEventListener('message', function() {
   threshold = 120;
   console.log('window message event reset');
   idleTime = 0;
