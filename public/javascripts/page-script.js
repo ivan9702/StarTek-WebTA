@@ -11,7 +11,7 @@ let redirectTo = '';
 let clkEvent = '';
 let adminUsers = [];
 
-(() => {
+(function () {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', originURL + '/queryAdmin');
     xhr.send();
@@ -22,14 +22,14 @@ let adminUsers = [];
     }
 })();
 
-(() => {
+(function() {
   const xhr = new XMLHttpRequest();
   xhr.open('POST', webApiUrl + 'load_fp_srv');
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.send();
 })();
 
-const selectFPService = btnId => {
+const selectFPService = function(btnId) {
   switch (btnId) {
     case 'clkIn':
       redirectTo = '';
@@ -45,7 +45,7 @@ const selectFPService = btnId => {
     case 'adminEntry':
       if (elemUserId.value && adminUsers.length > 0 && !adminUsers.includes(elemUserId.value)) {
         populateResMsg({
-          message: `${elemUserId.value} is not an Admin`
+          message: elemUserId.value + ' is not an Admin'
         });
         return null;
       }
@@ -57,7 +57,7 @@ const selectFPService = btnId => {
   return elemUserId.value ? 'verify' : 'identify';
 };
 
-allBtns.forEach(elem => {
+Array.prototype.forEach.call(allBtns, function(elem) {
   elem.addEventListener('click', sendRegToWebAPI);
 });
 
@@ -102,34 +102,34 @@ var taEntry_btn = document.getElementById('query');
 
 const btns = document.getElementsByTagName('button');
 const btnsArr = Array.prototype.slice.call(btns, 0);
-btnsArr.forEach( function (elem) {
+Array.prototype.forEach.call(allBtns, function (elem) {
   if(elem.id !== 'taEntry') elem.addEventListener('click', clearLastRes);
 });
 
-(() => {
+(function() {
   elemUserId.value = '';
   elemResult.value = '';
   elemDtStr.value = '';
 })();
 
-const goToTaPage = () => {
+const goToTaPage = function() {
   const currDate = createTimeStr().slice(0, 10);
   post(originURL + '/filter', {
     userId: elemUserId.value,
     querierId: elemUserId.value,
     listAll: 'true',
-    dtStart: `${currDate} 00:00`,
-    dtEnd: `${currDate} 23:59`,
+    dtStart: currDate + ' 00:00',
+    dtEnd: currDate + ' 23:59',
   });
 };
 
-const goToAdminPage = () => {
+const goToAdminPage = function() {
   post(originURL + '/admin', {
     userId: elemUserId.value
   });
 };
 
-const goToPage = (page) => {
+const goToPage = function(page) {
   switch (page) {
     case '/admin':
       goToAdminPage();
@@ -142,7 +142,7 @@ const goToPage = (page) => {
   }
 };
 
-const updateModelFooterBtn = (res) => {
+const updateModelFooterBtn = function(res) {
   taEntry_btn.style.visibility = 'hidden';
   if ( res.code === 20003 ) {
     taEntry_btn.addEventListener('click', goToTaPage.bind(taEntry_btn));
@@ -154,7 +154,7 @@ window.addEventListener('message', function(event) {
   const msg = event.data.response;
   const passCode = [ 20003, 20004 ];
   if (msg && event.origin === originURL) {
-    console.log(`message from CS: ${JSON.stringify(msg)}`);
+    console.log('message from CS: ' + JSON.stringify(msg));
     populateResMsg(msg);
     if (passCode.includes(msg.code)) goToPage(msg.goToPage);
   }
@@ -165,7 +165,7 @@ elemFingerId.onfocus = elemUserId.onfocus = resetInputTextColor;
 function populateResMsg(res) {
   elemResult.style.color = 'red';
   const timeStr = createTimeStr();
-  elemResult.value = `${res.message}`;
+  elemResult.value = res.message;
 
   if ( res.data && res.data.fpIndex ) {
     elemFingerId.style.color = 'red';
@@ -200,20 +200,11 @@ function resetInputTextColor() {
 function createTimeStr() {
   const currentdate = new Date();
   const dateTime = [currentdate.getMonth() + 1, currentdate.getDate(), currentdate.getHours(), currentdate.getMinutes(), currentdate.getSeconds()];
-  const dateTimeArr = dateTime.map((num) => {
+  const dateTimeArr = dateTime.map(function(num) {
     let str = num.toString();
     return str = str.length === 2 ? str : '0'.concat(str);
   });
   return currentdate.getFullYear() + '-' + dateTimeArr[0] + '-' + dateTimeArr[1] + ' ' + dateTimeArr[2] + ':' + dateTimeArr[3] + ':' + dateTimeArr[4];
-}
-
-function createResTimeStr() {
-  const dayNamesTw = [
-    '日', '一', '二', '三', '四', '五', '六',
-  ];
-  const dateTime = new Date();
-
-  return `${dateTime.getFullYear()}年${dateTime.getMonth() + 1}月${dateTime.getDate()}日 (${dayNamesTw[dateTime.getDay()]}) ${dateTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
 }
 
 function saveTaRecord(userId, dateTime, event) {
@@ -221,11 +212,15 @@ function saveTaRecord(userId, dateTime, event) {
     const xhr = new XMLHttpRequest();
     xhr.open('POST', originURL + '/addEntry');
     xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(JSON.stringify({userId, dateTime, event}));
+    xhr.send(JSON.stringify({
+      userId: userId,
+      dateTime: dateTime,
+      event: event
+    }));
   }
 }
 
-const createUser = () => {
+const createUser = function() {
   const xhr = new XMLHttpRequest();
   xhr.open('POST', originURL + '/createUser');
   xhr.setRequestHeader('Content-Type', 'application/json');
@@ -237,7 +232,7 @@ const createUser = () => {
   }));
   xhr.onreadystatechange = function () {
     if (xhr.readyState == XMLHttpRequest.DONE && xhr.response === 'First admin is created') {
-      setTimeout(() => {
+      setTimeout(function() {
         post(originURL + '/admin', {
           userId: elemUserId.value
         });
@@ -246,18 +241,18 @@ const createUser = () => {
   }
 }
 
-const resCodeHandler = (code) => {
+const resCodeHandler = function(code) {
   switch (code) {
     case 20001:
       createUser();
       break;
     default:
-      console.log(`Code: ${code} is not yet handled !!`);
+      console.log('Code: ' + code + ' is not yet handled !!');
   }
 };
 
 function startTime () {
-  elemDtStr.value = `${createTimeStr().slice(0, -3)}`;
+  elemDtStr.value = createTimeStr().slice(0, -3);
   setTimeout(startTime, 500);
 }
 
