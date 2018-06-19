@@ -1,6 +1,5 @@
 /* Refer to https://gist.github.com/adilapapaya/9787842 */
 $(document).ready(function() {
-  console.log("HELLO");
   function exportTableToCSV($table, filename) {
     var $headers = $table.find("tr:has(th)"),
       $rows = $table.find("tr:has(td)"),
@@ -19,11 +18,20 @@ $(document).ready(function() {
     // Data URI
     var csvData =
       "data:application/csv;charset=utf-8," + encodeURIComponent(csv);
-    $(this).attr({
-      download: filename,
-      href: csvData
-      //,'target' : '_blank' //if you want it to open in a new window
-    });
+    // For IE (tested 10+), https://msdn.microsoft.com/en-us/library/hh772331(v=vs.85).aspx
+    if (window.navigator.msSaveOrOpenBlob) {
+      var blob = new Blob([decodeURIComponent(encodeURI(csv))], {
+        type: "text/csv;charset=utf-8;"
+      });
+      navigator.msSaveBlob(blob, filename);
+    } else {
+      $(this)
+        .attr({
+          'download': filename
+          , 'href': csvData
+          //,'target' : '_blank' //if you want it to open in a new window
+        });
+    }
     //------------------------------------------------------------
     // Helper Functions
     //------------------------------------------------------------
