@@ -13,23 +13,26 @@ User.allAdmin(null, (err, adminUser) => {
 exports.home = (req, res, next) => {
   if (!arrAdminUser.includes(req.body.userId) && req.method !== 'GET') {
     const idxURL = `${req.protocol}://${req.hostname}:${req.client.localPort}`;
-    res.send(`<div style="text-align: center">
-                <h1>
-                  ${req.body.userId} isn't an Admin user
-                </h1>
-                <h2> Go Back To Welcome Page in <span id='timer'></span> sec</h2>
-              </div>
-              <script>
-                const elemTimer = document.getElementById('timer');
-                elemTimer.style.color = 'red';
-                elemTimer.innerHTML = 5;
-                const id = setInterval(() => {
-                  elemTimer.innerHTML -= 1;
-                }, 1000);
-                setTimeout(() => {
-                  window.location.href = '${idxURL}'
-                }, 5000);
-              </script>`);
+    const rejScript = `
+      <div style="text-align: center">
+        <h1>
+          ${req.body.userId} isn't an Admin user
+        </h1>
+        <h2> Go Back To Welcome Page in <span id='timer'></span> sec</h2>
+      </div>
+      <script>
+        const elemTimer = document.getElementById('timer');
+        elemTimer.style.color = 'red';
+        elemTimer.innerHTML = 5;
+        const id = setInterval(function() {
+          elemTimer.innerHTML -= 1;
+        }, 1000);
+        setTimeout(function() {
+          window.location.href = '${idxURL}'
+        }, 5000);
+      </script>
+    `;
+    res.send(rejScript);
   } else {
     res.render('admin', {
       title: 'STARTEK WebTA Admin',
