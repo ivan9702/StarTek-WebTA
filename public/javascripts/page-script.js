@@ -242,6 +242,8 @@ const createUser = function() {
         }, 2000);
       }
       adminUsers = resJSON.adminUser;
+      allUserId = resJSON.allUserId;
+      allUserName = resJSON.allUserName;
       checkAdminLock(adminUsers);
     }
   }

@@ -1,4 +1,4 @@
-let adminUsers = [];
+let adminUsers, allUserId, allUserName = [];
 const userIdInput = document.getElementById('userid');
 const btnDelete = document.getElementById('delete_finger');
 
@@ -16,6 +16,23 @@ function queryAdmin() {
 }
 
 queryAdmin();
+
+function queryAllUser() {
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', originURL + '/queryAllUser');
+  xhr.send();
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+      const res = JSON.parse(xhr.response);
+      allUserId = res.allUserId;
+      allUserName = res.allUserName;
+      console.log(allUserId);
+      console.log(allUserName);
+    }
+  }
+}
+
+queryAllUser();
 
 function keyEvtListener() {
   btnDelete.disabled = (adminUsers.includes(userIdInput.value)) ? true : false;

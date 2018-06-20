@@ -1,8 +1,8 @@
 const { db } = require('./db');
 
 class User {
-  static all(cb) {
-    const sql = "SELECT UserName, Privilege.Name AS PrivilegeName, Department.Name AS DepartmentName FROM User JOIN Privilege ON User.PrivilegeId = Privilege.PrivilegeId LEFT JOIN Department ON User.DepartmentId = Department.DepartmentId";
+  static all(data, cb) {
+    const sql = "SELECT UserName AS userId, NameString AS userName FROM User";
     db.all(sql, cb);
   }
 

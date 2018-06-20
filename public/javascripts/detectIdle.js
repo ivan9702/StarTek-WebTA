@@ -4,6 +4,16 @@ const enrollBtn = document.getElementById('enroll');
 const userNameInput = document.getElementById('userName');
 
 document.addEventListener('keyup', function() {
+  const userIdIdx = allUserId.findIndex(function(el) {
+    return el === elemUserId.value;
+  });
+
+  if (userIdIdx !== -1) {
+    userNameInput.value = allUserName[userIdIdx];
+    userNameInput.readOnly = true;
+  } else {
+    userNameInput.readOnly = false;
+  }
   console.log('document keyup event reset');
   idleTime = 0;
 });

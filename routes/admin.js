@@ -2,11 +2,21 @@ const { User } = require('../models/user');
 const pJson = require('../package.json');
 
 const arrAdminUser = [];
+const allUserId = [];
+const allUserName = [];
 
 User.allAdmin(null, (err, adminUser) => {
   if (err) return next(err);
   adminUser.forEach(user => {
     arrAdminUser.push(user.AdminUser);
+  });
+});
+
+User.all(null, (err, users) => {
+  if (err) return next(err);
+  users.forEach(user => {
+    allUserId.push(user.userId);
+    allUserName.push(user.userName);
   });
 });
 
@@ -47,4 +57,10 @@ exports.queryAdmin = (req, res, next) => {
   res.status(200).send(arrAdminUser);
 };
 
+exports.queryAllUser = (req, res, next) => {
+  res.status(200).send({allUserId, allUserName});
+};
+
 exports.arrAdminUser = arrAdminUser;
+exports.allUserId = allUserId;
+exports.allUserName = allUserName;

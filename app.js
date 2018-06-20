@@ -35,6 +35,7 @@ app.get('/listAll', entries.listAll);
 app.post('/admin', admin.home);
 app.get('/admin', admin.home);
 app.get('/queryAdmin', admin.queryAdmin);
+app.get('/queryAllUser', admin.queryAllUser);
 
 app.post('/createUser', users.createUser);
 

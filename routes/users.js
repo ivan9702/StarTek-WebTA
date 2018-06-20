@@ -1,5 +1,5 @@
 const { User } = require('../models/user');
-const { arrAdminUser } = require('./admin.js');
+const { arrAdminUser, allUserId, allUserName } = require('./admin.js');
 
 exports.createUser = (req, res, next) => {
   const data = req.body;
@@ -16,9 +16,13 @@ exports.createUser = (req, res, next) => {
       arrAdminUser.push(data.UserName);
       if (arrAdminUser.length === 1) resMsg = 'First admin is created';
     }
+    allUserId.push(data.UserName);
+    allUserName.push(data.NameString);
     res.status(201).send({
       resMsg,
-      adminUser: arrAdminUser
+      adminUser: arrAdminUser,
+      allUserId,
+      allUserName
     });
   });
 };
