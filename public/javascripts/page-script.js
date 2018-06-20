@@ -3,12 +3,14 @@ const elemNameStr = document.getElementById('userName');
 const elemFingerId = document.getElementById('fingerid');
 const elemPrivilegeId = document.getElementById('privilegeId');
 const elemResult = document.getElementById('results');
+const userNameInput = document.getElementById('userName');
 const elemDtStr = document.getElementById('fmtDtStr');
 const originURL = document.location.toString().replace(/\/[^\/]*$/, '');
 const allBtns = document.querySelectorAll('button');
 const webApiUrl = 'http://localhost:5887/api/';
 let redirectTo = '';
 let clkEvent = '';
+let clearResTimer;
 
 (function () {
     const xhr = new XMLHttpRequest();
@@ -85,6 +87,7 @@ function sendRegToWebAPI (req) {
   const passCode = [ 20003, 20004 ];
   const xhr = new XMLHttpRequest();
   const webApiRoute = selectFPService(this.id) || req;
+  if (clearResTimer) clearTimeout(clearResTimer);
   if (!webApiRoute) return null;
   const reqData = getReqData(webApiRoute);
   xhr.open('POST', webApiUrl + webApiRoute);
@@ -181,6 +184,15 @@ function populateResMsg(res) {
     saveTaRecord(elemUserId.value, timeStr, clkEvent);
     resCodeHandler(res.code);
   }
+  clearResTimer = setTimeout(function() {
+    if (!userNameInput) {
+      resetInputTextColor();
+      elemUserId.value = '';
+    } else {
+      elemFingerId.selectedIndex = 0;
+    }
+    elemResult.value = '';
+  }, 7000);
 }
 
 function clearLastRes() {
@@ -195,7 +207,8 @@ function clearLastRes() {
 }
 
 function resetInputTextColor() {
-  elemFingerId.style.color = elemUserId.style.color = '';
+  if (!userNameInput) elemUserId.style.color = '';
+  elemFingerId.style.color = '';
 }
 
 function createTimeStr() {

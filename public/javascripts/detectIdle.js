@@ -1,7 +1,6 @@
 var idleTime = 0;
 var threshold = 120;
 const enrollBtn = document.getElementById('enroll');
-const userNameInput = document.getElementById('userName');
 
 document.addEventListener('keyup', function(event) {
   if (userNameInput) {
