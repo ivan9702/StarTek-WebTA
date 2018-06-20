@@ -1,6 +1,7 @@
 var idleTime = 0;
 var threshold = 120;
 const enrollBtn = document.getElementById('enroll');
+const userNameInput = document.getElementById('userName');
 
 document.addEventListener('keyup', function() {
   console.log('document keyup event reset');
@@ -11,8 +12,21 @@ window.addEventListener('message', function() {
   console.log('window message event reset');
   idleTime = 0;
 });
+userNameInput.addEventListener('focus', function() {
+  if (this.style.color === 'white') {
+    this.value = '';
+    this.setAttribute("style", "color: black; background-color: white;");
+  }
+});
 document.addEventListener('click', function(event) {
-  threshold = (event.target === enrollBtn) ? 300 : 120;
+  if (event.target === enrollBtn) {
+    if (!userNameInput.value) {
+      userNameInput.value = 'Required';
+      userNameInput.setAttribute("style", "color: white; background-color: red;");
+    } else {
+      threshold = 300;
+    }
+  }
   console.log('document click event reset');
   idleTime = 0;
 });

@@ -50,6 +50,8 @@ const selectFPService = function(btnId) {
       }
       redirectTo = '/admin';
       break;
+    case 'enroll':
+      return (elemNameStr.value === '') ? null : btnId;
     default:
       return btnId;
   }
