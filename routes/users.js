@@ -16,6 +16,9 @@ exports.createUser = (req, res, next) => {
       arrAdminUser.push(data.UserName);
       if (arrAdminUser.length === 1) resMsg = 'First admin is created';
     }
-    res.status(201).send(resMsg);
+    res.status(201).send({
+      resMsg,
+      adminUser: arrAdminUser
+    });
   });
 };

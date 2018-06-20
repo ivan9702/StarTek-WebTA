@@ -9,7 +9,6 @@ const allBtns = document.querySelectorAll('button');
 const webApiUrl = 'http://localhost:5887/api/';
 let redirectTo = '';
 let clkEvent = '';
-let adminUsers = [];
 
 (function () {
     const xhr = new XMLHttpRequest();
@@ -231,12 +230,17 @@ const createUser = function() {
     PrivilegeId: elemPrivilegeId.value
   }));
   xhr.onreadystatechange = function () {
-    if (xhr.readyState == XMLHttpRequest.DONE && xhr.response === 'First admin is created') {
-      setTimeout(function() {
-        post(originURL + '/admin', {
-          userId: elemUserId.value
-        });
-      }, 2000);
+    if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 201) {
+      const resJSON = JSON.parse(xhr.response);
+      if (resJSON.adminUser.length === 1) {
+        setTimeout(() => {
+          post(originURL + '/admin', {
+            userId: elemUserId.value
+          });
+        }, 2000);
+      }
+      adminUsers = resJSON.adminUser;
+      checkAdminLock(adminUsers);
     }
   }
 }
