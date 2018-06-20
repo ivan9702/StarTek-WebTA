@@ -9,7 +9,6 @@ function queryAdmin() {
   xhr.onreadystatechange = function () {
     if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
       adminUsers = xhr.response.slice(1, -1).replace(/\"/g, '').split(',');
-      console.log(adminUsers);
       checkAdminLock(adminUsers);
     }
   }
@@ -26,8 +25,6 @@ function queryAllUser() {
       const res = JSON.parse(xhr.response);
       allUserId = res.allUserId;
       allUserName = res.allUserName;
-      console.log(allUserId);
-      console.log(allUserName);
     }
   }
 }

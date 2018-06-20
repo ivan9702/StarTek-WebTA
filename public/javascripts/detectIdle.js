@@ -14,12 +14,10 @@ document.addEventListener('keyup', function() {
   } else {
     userNameInput.readOnly = false;
   }
-  console.log('document keyup event reset');
   idleTime = 0;
 });
 window.addEventListener('message', function() {
   threshold = 120;
-  console.log('window message event reset');
   idleTime = 0;
 });
 userNameInput.addEventListener('focus', function() {
@@ -37,15 +35,12 @@ document.addEventListener('click', function(event) {
       threshold = 300;
     }
   }
-  console.log('document click event reset');
   idleTime = 0;
 });
 
 function timerIncrement() {
   setTimeout(timerIncrement, 1000);
   idleTime = idleTime + 1;
-  console.log('idleTime: ', idleTime);
-  console.log('threshold: ', threshold);
   if (idleTime > threshold) {
     window.location.href = originURL;
   }
