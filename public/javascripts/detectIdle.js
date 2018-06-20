@@ -3,7 +3,7 @@ var threshold = 120;
 const enrollBtn = document.getElementById('enroll');
 const userNameInput = document.getElementById('userName');
 
-document.addEventListener('keyup', function() {
+document.addEventListener('keyup', function(event) {
   const userIdIdx = allUserId.findIndex(function(el) {
     return el === elemUserId.value;
   });
@@ -12,6 +12,7 @@ document.addEventListener('keyup', function() {
     userNameInput.value = allUserName[userIdIdx];
     userNameInput.readOnly = true;
   } else {
+    if (event.target === elemUserId) userNameInput.value = '';
     userNameInput.readOnly = false;
   }
   idleTime = 0;
