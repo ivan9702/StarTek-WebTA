@@ -46,9 +46,11 @@ document.addEventListener('click', function(event) {
 });
 
 function timerIncrement() {
-  setTimeout(timerIncrement, 1000);
+  const logoutTimer = setTimeout(timerIncrement, 1000);
   idleTime = idleTime + 1;
   if (idleTime > threshold) {
+    clearTimeout(logoutTimer);
+    sendRegToWebAPI('cancel');
     window.location.href = originURL;
   }
 }

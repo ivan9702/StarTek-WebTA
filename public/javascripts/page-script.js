@@ -81,10 +81,10 @@ function getReqData (fpService) {
   }
 }
 
-function sendRegToWebAPI () {
+function sendRegToWebAPI (req) {
   const passCode = [ 20003, 20004 ];
   const xhr = new XMLHttpRequest();
-  const webApiRoute =  selectFPService(this.id);
+  const webApiRoute = selectFPService(this.id) || req;
   if (!webApiRoute) return null;
   const reqData = getReqData(webApiRoute);
   xhr.open('POST', webApiUrl + webApiRoute);
