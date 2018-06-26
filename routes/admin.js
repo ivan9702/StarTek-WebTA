@@ -22,7 +22,6 @@ User.all(null, (err, users) => {
 
 exports.home = (req, res, next) => {
   if (!arrAdminUser.includes(req.body.userId) && req.method !== 'GET') {
-    const idxURL = `${req.protocol}://${req.hostname}:${req.client.localPort}`;
     const rejScript = `
       <div style="text-align: center">
         <h1>
@@ -38,7 +37,7 @@ exports.home = (req, res, next) => {
           elemTimer.innerHTML -= 1;
         }, 1000);
         setTimeout(function() {
-          window.location.href = '${idxURL}'
+          window.location.href = location.protocol + '//' + location.hostname + ':' + location.port
         }, 5000);
       </script>
     `;
