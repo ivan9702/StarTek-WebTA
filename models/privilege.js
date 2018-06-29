@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Privilege.associate = function(models) {
     // associations can be defined here
+    Privilege.hasMany(models.User);
   };
   return Privilege;
 };
