@@ -5,20 +5,20 @@ const arrAdminUser = [];
 const allUserId = [];
 const allUserName = [];
 
-User.allAdmin(null, (err, adminUser) => {
-  if (err) return next(err);
-  adminUser.forEach(user => {
-    arrAdminUser.push(user.AdminUser);
-  });
-});
+// User.allAdmin(null, (err, adminUser) => {
+//   if (err) return next(err);
+//   adminUser.forEach(user => {
+//     arrAdminUser.push(user.AdminUser);
+//   });
+// });
 
-User.all(null, (err, users) => {
-  if (err) return next(err);
-  users.forEach(user => {
-    allUserId.push(user.userId);
-    allUserName.push(user.userName);
-  });
-});
+// User.all(null, (err, users) => {
+//   if (err) return next(err);
+//   users.forEach(user => {
+//     allUserId.push(user.userId);
+//     allUserName.push(user.userName);
+//   });
+// });
 
 exports.home = (req, res, next) => {
   if (!arrAdminUser.includes(req.body.userId) && req.method !== 'GET') {
