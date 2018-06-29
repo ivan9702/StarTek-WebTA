@@ -2,25 +2,16 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Locations', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
-      },
       LocationId: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        primaryKey: true,
+        unique:true,
+        type: Sequelize.INTEGER,
       },
       IpAddress: {
+        allowNull: false,
+        unique:true,
         type: Sequelize.STRING
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
       }
     });
   },

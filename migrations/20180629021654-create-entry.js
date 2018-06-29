@@ -2,25 +2,39 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Entries', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
-      },
       EntryId: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        primaryKey: true,
+        unique:true,
+        type: Sequelize.INTEGER,
       },
       DateTime: {
-        type: Sequelize.DATE
-      },
-      createdAt: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
+      UserId: {
         allowNull: false,
-        type: Sequelize.DATE
+        references: {
+          model: 'Users',
+          key: 'UserId'
+        },
+        type: Sequelize.INTEGER,
+      },
+      EventId: {
+        allowNull: false,
+        references: {
+          model: 'Events',
+          key: 'EventId'
+        },
+        type: Sequelize.INTEGER,
+      },
+      LocationId: {
+        allowNull: false,
+        references: {
+          model: 'Locations',
+          key: 'LocationId'
+        },
+        type: Sequelize.INTEGER,
       }
     });
   },

@@ -24,6 +24,13 @@ module.exports = {
           key: 'PrivilegeId'
         },
         type: Sequelize.INTEGER,
+      },
+      DepartmentId: {
+        references: {
+          model: 'Departments',
+          key: 'DepartmentId'
+        },
+        type: Sequelize.INTEGER,
       }
     });
   },
