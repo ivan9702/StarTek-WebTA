@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, Privilege } = require('../models');
 const pJson = require('../package.json');
 
 const arrAdminUser = [];
@@ -15,12 +15,24 @@ const allUserName = [];
     allUserName.push(user.NameString);
   });
 })();
-// User.allAdmin(null, (err, adminUser) => {
-//   if (err) return next(err);
-//   adminUser.forEach(user => {
-//     arrAdminUser.push(user.AdminUser);
-//   });
-// });
+
+(async () => {
+  const adminUsers = await User.findAll({
+    attributes: {
+      exclude: ['DepartmentId', 'PrivilegeId']
+    },
+    include: [{
+      model: Privilege,
+      where: {
+        Name: 'admin'
+      }
+    }]
+  });
+
+  adminUsers.forEach(user => {
+    arrAdminUser.push(user.UserName);
+  });
+})();
 
 exports.home = (req, res, next) => {
   if (!arrAdminUser.includes(req.body.userId) && req.method !== 'GET') {
