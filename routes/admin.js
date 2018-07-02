@@ -1,22 +1,23 @@
-const { User } = require('../models/user');
+const { User } = require('../models');
 const pJson = require('../package.json');
 
 const arrAdminUser = [];
 const allUserId = [];
 const allUserName = [];
 
+User.findAll({
+    attributes: ['UserName', 'NameString']
+  })
+  .then(users => {
+    users.forEach(user => {
+      allUserId.push(user.UserName);
+      allUserName.push(user.NameString);
+    });
+  });
 // User.allAdmin(null, (err, adminUser) => {
 //   if (err) return next(err);
 //   adminUser.forEach(user => {
 //     arrAdminUser.push(user.AdminUser);
-//   });
-// });
-
-// User.all(null, (err, users) => {
-//   if (err) return next(err);
-//   users.forEach(user => {
-//     allUserId.push(user.userId);
-//     allUserName.push(user.userName);
 //   });
 // });
 
