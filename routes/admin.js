@@ -5,15 +5,16 @@ const arrAdminUser = [];
 const allUserId = [];
 const allUserName = [];
 
-User.findAll({
+(async () => {
+  const users = await User.findAll({
     attributes: ['UserName', 'NameString']
-  })
-  .then(users => {
-    users.forEach(user => {
-      allUserId.push(user.UserName);
-      allUserName.push(user.NameString);
-    });
   });
+
+  users.forEach(user => {
+    allUserId.push(user.UserName);
+    allUserName.push(user.NameString);
+  });
+})();
 // User.allAdmin(null, (err, adminUser) => {
 //   if (err) return next(err);
 //   adminUser.forEach(user => {
