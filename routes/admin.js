@@ -17,21 +17,17 @@ const allUserName = [];
 })();
 
 (async () => {
-  const adminUsers = await User.findAll({
-    attributes: {
-      exclude: ['DepartmentId', 'PrivilegeId']
-    },
-    include: [{
-      model: Privilege,
-      where: {
-        Name: 'admin'
-      }
-    }]
+  const adminPrivilege = await Privilege.findOne({
+    where: {
+      Name: 'admin'
+    }
   });
 
+  const adminUsers = await adminPrivilege.getUsers();
   adminUsers.forEach(user => {
     arrAdminUser.push(user.UserName);
   });
+  console.log('arrAdminUser: ', arrAdminUser);
 })();
 
 exports.home = (req, res, next) => {
