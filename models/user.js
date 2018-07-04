@@ -20,7 +20,9 @@ module.exports = (sequelize, DataTypes) => {
     User.belongsTo(models.Department, {
       foreignKey: 'DepartmentId'
     });
-    User.hasMany(models.Entry);
+    User.hasMany(models.Entry, {
+      foreignKey: 'UserId'
+    });
   };
   return User;
 };
