@@ -17,7 +17,9 @@ module.exports = (sequelize, DataTypes) => {
     User.belongsTo(models.Privilege, {
       foreignKey: 'PrivilegeId'
     });
-    User.belongsTo(models.Department);
+    User.belongsTo(models.Department, {
+      foreignKey: 'DepartmentId'
+    });
     User.hasMany(models.Entry);
   };
   return User;
