@@ -1,6 +1,6 @@
 const { User } = require('../models');
 const { arrAdminUser, allUserId, allUserName } = require('./admin.js');
-
+const { syncUserMap } = require('./entries');
 
 exports.createUser = async (req, res, next) => {
   const data = req.body;
@@ -33,4 +33,5 @@ exports.createUser = async (req, res, next) => {
     allUserId,
     allUserName
   });
+  syncUserMap();
 };

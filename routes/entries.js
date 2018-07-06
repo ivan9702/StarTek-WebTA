@@ -2,6 +2,50 @@ const { Entry, Location, Event, User } = require('../models');
 const { arrAdminUser } = require('./admin.js');
 const pJson = require('../package.json');
 
+const locationMap = new Map();
+const eventMap = new Map();
+const userMap = new Map();
+
+const syncUserMap = async () => {
+  try {
+    const users = await User.findAll({
+      fields: ['UserId', 'UserName']
+    });
+    users.map(user => {
+      userMap.set(user.get('UserName'), user.get('UserId'));
+    });
+    console.log(userMap);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+syncUserMap();
+
+(async () => {
+  try {
+    const locations = await Location.findAll();
+    locations.map(location => {
+      locationMap.set(location.get('IpAddress'), location.get('LocationId'));
+    });
+    console.log(locationMap);
+  } catch (e) {
+    console.log(e);
+  }
+})();
+
+(async () => {
+  try {
+    const events = await Event.findAll();
+    events.map(event => {
+      eventMap.set(event.get('Name'), event.get('EventId'));
+    });
+    console.log(eventMap);
+  } catch (e) {
+    console.log(e);
+  }
+})();
+
 exports.listAll = async (req, res, next) => {
   try {
     const entriesModel = await Entry.findAll({
@@ -45,13 +89,42 @@ exports.listAll = async (req, res, next) => {
   }
 };
 
-exports.addEntry = (req, res, next) => {
+exports.addEntry = async (req, res, next) => {
   const ipAddress = req.ip.match(/:([\d\.]*$)/)[1];
   const data = {...req.body, ipAddress};
-  Entry.create(data, (err, entry) => {
-    if (err) return next(err);
+
+  if ( !locationMap.get(data.ipAddress) ) {
+    await Location.create({
+      IpAddress: data.ipAddress
+    }, {
+      fields: ['IpAddress']
+    })
+    const createdLocation = await Location.findOne({
+      where: {
+        IpAddress: data.ipAddress
+      }
+    })
+    locationMap.set(data.ipAddress, createdLocation.get('LocationId'));
+    console.log(locationMap);
+  }
+
+  const entryToBeWritten = {
+    DateTime: data.dateTime + 'Z',
+    EventId: eventMap.get(data.event),
+    LocationId: locationMap.get(data.ipAddress),
+    UserId: userMap.get(data.userId)
+  };
+
+  console.log(entryToBeWritten);
+
+  try {
+    await Entry.create(entryToBeWritten, {
+      fields: ['DateTime', 'EventId', 'LocationId', 'UserId']
+    })
     res.status(201).send('A TA record is saved');
-  });
+  } catch (e) {
+    return next(err);
+  }
 };
 
 exports.filter = (req, res, next) => {
@@ -112,3 +185,5 @@ exports.filter = (req, res, next) => {
     }
   });
 };
+
+exports.syncUserMap = syncUserMap;
