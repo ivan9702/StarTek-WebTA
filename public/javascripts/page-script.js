@@ -7,7 +7,7 @@ const userNameInput = document.getElementById('userName');
 const elemDtStr = document.getElementById('fmtDtStr');
 const originURL = document.location.toString().replace(/\/[^\/]*$/, '');
 const allBtns = document.querySelectorAll('button');
-const webApiUrl = location.protocol + '//localhost:5887/api/';
+const webApiUrl = location.protocol + '//localhost:' + (location.protocol === 'https:' ? '5888' : '5887') + '/api/';
 let redirectTo = '';
 let clkEvent = '';
 let clearResTimer;
