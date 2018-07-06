@@ -1,10 +1,38 @@
-const { Entry } = require('../models/entry');
+const { Entry, Location, Event, User } = require('../models');
 const { arrAdminUser } = require('./admin.js');
 const pJson = require('../package.json');
 
-exports.listAll = (req, res, next) => {
-  Entry.all((err, entries) => {
-    if (err) return next(err);
+exports.listAll = async (req, res, next) => {
+  try {
+    const entriesModel = await Entry.findAll({
+      attributes: [
+        ['DateTime', 'dateTime']
+      ],
+      include: [{
+        model: Location,
+        required: true
+      }, {
+        model: Event,
+        required: true
+      }, {
+        model: User,
+        required: true,
+        attributes: {
+          exclude: ['DepartmentId', 'PrivilegeId']
+        }
+      }]
+    });
+
+    const entries = entriesModel.map(entry => {
+      return {
+        dateTime: entry.get('dateTime'),
+        event: entry.Event.Name,
+        id: entry.User.UserName,
+        location: entry.Location.IpAddress,
+        nameStr: entry.User.NameString
+      };
+    });
+
     res.render('entries', {
       title: 'All the TA Records',
       listAll: 'true',
@@ -12,7 +40,9 @@ exports.listAll = (req, res, next) => {
       home: req.headers.origin,
       version: pJson.version
     });
-  });
+  } catch (e) {
+    return next(e);
+  }
 };
 
 exports.addEntry = (req, res, next) => {
