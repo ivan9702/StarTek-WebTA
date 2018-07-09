@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Users', {
+    return queryInterface.createTable('User', {
       UserId: {
         allowNull: false,
         primaryKey: true,
@@ -20,14 +20,14 @@ module.exports = {
       PrivilegeId: {
         allowNull: false,
         references: {
-          model: 'Privileges',
+          model: 'Privilege',
           key: 'PrivilegeId'
         },
         type: Sequelize.INTEGER,
       },
       DepartmentId: {
         references: {
-          model: 'Departments',
+          model: 'Department',
           key: 'DepartmentId'
         },
         type: Sequelize.INTEGER,
@@ -35,6 +35,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Users');
+    return queryInterface.dropTable('User');
   }
 };

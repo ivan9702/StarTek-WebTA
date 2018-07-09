@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Entries', {
+    return queryInterface.createTable('Entry', {
       EntryId: {
         allowNull: false,
         primaryKey: true,
@@ -15,7 +15,7 @@ module.exports = {
       UserId: {
         allowNull: false,
         references: {
-          model: 'Users',
+          model: 'User',
           key: 'UserId'
         },
         type: Sequelize.INTEGER,
@@ -23,7 +23,7 @@ module.exports = {
       EventId: {
         allowNull: false,
         references: {
-          model: 'Events',
+          model: 'Event',
           key: 'EventId'
         },
         type: Sequelize.INTEGER,
@@ -31,7 +31,7 @@ module.exports = {
       LocationId: {
         allowNull: false,
         references: {
-          model: 'Locations',
+          model: 'Location',
           key: 'LocationId'
         },
         type: Sequelize.INTEGER,
@@ -39,6 +39,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Entries');
+    return queryInterface.dropTable('Entry');
   }
 };
