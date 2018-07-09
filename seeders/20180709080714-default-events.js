@@ -13,8 +13,10 @@ module.exports = {
       }], {});
     */
     return queryInterface.bulkInsert('Event', [{
+      EventId: 1,
       Name: 'Clock-In'
     }, {
+      EventId: 2,
       Name: 'Clock-Out'
     }], {});
   },

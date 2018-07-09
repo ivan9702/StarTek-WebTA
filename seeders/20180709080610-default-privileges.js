@@ -13,10 +13,13 @@ module.exports = {
       }], {});
     */
     return queryInterface.bulkInsert('Privilege', [{
+      PrivilegeId: 1,
       Name: 'admin'
     }, {
+      PrivilegeId: 2,
       Name: 'normal'
     }, {
+      PrivilegeId: 3,
       Name: 'deactivated'
     }], {});
   },
