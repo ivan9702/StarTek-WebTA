@@ -126,7 +126,7 @@ exports.addEntry = async (req, res, next) => {
     })
     res.status(201).send('A TA record is saved');
   } catch (e) {
-    return next(err);
+    return next(e);
   }
 };
 
