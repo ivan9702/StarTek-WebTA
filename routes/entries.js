@@ -70,9 +70,8 @@ exports.listAll = async (req, res, next) => {
     });
 
     const entries = entriesModel.map(entry => {
-      const dbDateTime = entry.get('dateTime');
       return {
-        dateTime: dbDateTime.length > 20 ? createTimeStr(dbDateTime) : dbDateTime,
+        dateTime: formatTimeStr(entry.get('dateTime')),
         event: entry.Event.Name,
         id: entry.User.UserName,
         location: entry.Location.IpAddress,
@@ -165,9 +164,8 @@ exports.filter = async (req, res, next) => {
   });
 
   const entries = entriesModel.map(entry => {
-    const dbDateTime = entry.get('dateTime');
     return {
-      dateTime: dbDateTime.length > 20 ? createTimeStr(dbDateTime) : dbDateTime,
+      dateTime: formatTimeStr(entry.get('dateTime')),
       event: entry.get('Event').get('Name'),
       id: entry.get('User').get('UserName'),
       location: entry.get('Location').get('IpAddress'),
@@ -223,9 +221,15 @@ exports.filter = async (req, res, next) => {
   }
 };
 
-function createTimeStr(dbDateTime) {
-  const localDateTime = new Date(dbDateTime + "UTC");
+function formatTimeStr(dbDateTime) {
+  let localDateTime;
+  if (dbDateTime.length > 19) {
+    localDateTime = new Date(dbDateTime + "UTC");
+  } else {
+    localDateTime = new Date(dbDateTime);
+  }
   const dateTime = [localDateTime.getMonth() + 1, localDateTime.getDate(), localDateTime.getHours(), localDateTime.getMinutes(), localDateTime.getSeconds()];
+
   const dateTimeArr = dateTime.map(function(num) {
     let str = num.toString();
     return str = str.length === 2 ? str : '0'.concat(str);
