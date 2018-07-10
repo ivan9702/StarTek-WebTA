@@ -69,15 +69,7 @@ exports.listAll = async (req, res, next) => {
       }]
     });
 
-    const entries = entriesModel.map(entry => {
-      return {
-        dateTime: formatTimeStr(entry.get('dateTime')),
-        event: entry.Event.Name,
-        id: entry.User.UserName,
-        location: entry.Location.IpAddress,
-        nameStr: entry.User.NameString
-      };
-    });
+    const entries = extractQueryRes(entriesModel);
 
     res.render('entries', {
       title: 'All the TA Records',
@@ -163,16 +155,7 @@ exports.filter = async (req, res, next) => {
     }
   });
 
-  const entries = entriesModel.map(entry => {
-    return {
-      dateTime: formatTimeStr(entry.get('dateTime')),
-      event: entry.get('Event').get('Name'),
-      id: entry.get('User').get('UserName'),
-      location: entry.get('Location').get('IpAddress'),
-      nameStr: entry.get('User').get('NameString')
-    };
-  });
-
+  const entries = extractQueryRes(entriesModel);
   console.log('entries: ', entries);
 
   const renderInfo = {
@@ -235,6 +218,18 @@ function formatTimeStr(dbDateTime) {
     return str = str.length === 2 ? str : '0'.concat(str);
   });
   return localDateTime.getFullYear() + '-' + dateTimeArr[0] + '-' + dateTimeArr[1] + ' ' + dateTimeArr[2] + ':' + dateTimeArr[3] + ':' + dateTimeArr[4];
+}
+
+function extractQueryRes (dbModels) {
+  return dbModels.map(entry => {
+    return {
+      dateTime: formatTimeStr(entry.get('dateTime')),
+      event: entry.Event.Name,
+      id: entry.User.UserName,
+      location: entry.Location.IpAddress,
+      nameStr: entry.User.NameString
+    };
+  });
 }
 
 exports.syncUserMap = syncUserMap;
