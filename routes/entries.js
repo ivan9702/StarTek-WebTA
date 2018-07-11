@@ -84,7 +84,8 @@ exports.listAll = async (req, res, next) => {
 };
 
 exports.addEntry = async (req, res, next) => {
-  const ipAddress = req.ip.match(/:([\d\.]*$)/)[1];
+  const ipAddress = req.headers['x-forwarded-for'] || req.ip.match(/:([\d\.]*$)/)[1];
+  console.log('ipAddress: ', ipAddress);
   const data = {...req.body, ipAddress};
 
   if ( !locationMap.get(data.ipAddress) ) {
