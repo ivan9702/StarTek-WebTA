@@ -8,6 +8,7 @@ const elemDtStr = document.getElementById('fmtDtStr');
 const originURL = document.location.toString().replace(/\/[^\/]*$/, '');
 const allBtns = document.querySelectorAll('button');
 const webApiUrl = location.protocol + '//localhost:' + (location.protocol === 'https:' ? '5888' : '5887') + '/api/';
+const passCode = [ 20003, 20004 ];
 let redirectTo = '';
 let clkEvent = '';
 let clearResTimer;
@@ -84,7 +85,6 @@ function getReqData (fpService) {
 }
 
 function sendRegToWebAPI (req) {
-  const passCode = [ 20003, 20004 ];
   const xhr = new XMLHttpRequest();
   const webApiRoute = selectFPService(this.id) || req;
   if (clearResTimer) clearTimeout(clearResTimer);
@@ -156,7 +156,6 @@ const updateModelFooterBtn = function(res) {
 
 window.addEventListener('message', function(event) {
   const msg = event.data.response;
-  const passCode = [ 20003, 20004 ];
   if (msg && event.origin === originURL) {
     console.log('message from CS: ' + JSON.stringify(msg));
     populateResMsg(msg);
@@ -181,7 +180,7 @@ function populateResMsg(res) {
     elemUserId.value = res.data.userId || res.data.clientUserId;
   }
   if (redirectTo === '') {
-    saveTaRecord(elemUserId.value, timeStr, clkEvent);
+    if (passCode.includes(res.code)) saveTaRecord(elemUserId.value, timeStr, clkEvent);
     resCodeHandler(res.code);
   }
   clearResTimer = setTimeout(function() {
