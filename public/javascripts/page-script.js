@@ -142,7 +142,7 @@ const goToPage = function(page) {
       goToTaPage();
       break;
     default:
-      console.log('Stay Here');
+      return;
   }
 };
 
@@ -267,7 +267,7 @@ const resCodeHandler = function(code) {
       createUser();
       break;
     default:
-      console.log('Code: ' + code + ' is not yet handled !!');
+      return;
   }
 };
 
