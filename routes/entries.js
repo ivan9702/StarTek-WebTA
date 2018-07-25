@@ -151,7 +151,10 @@ exports.filter = async (req, res, next) => {
     where: {
       UserId: userMap.get(userId),
       DateTime: {
-        [Op.between]: [dtStart, dtEnd]
+        [Op.between]: [
+          new Date(dtStart).toISOString().slice(0, -8).replace('T', ' '),
+          new Date(dtEnd).toISOString().slice(0, -8).replace('T', ' ')
+        ]
       }
     }
   });
