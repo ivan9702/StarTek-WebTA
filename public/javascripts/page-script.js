@@ -92,11 +92,17 @@ function sendRegToWebAPI (req) {
   const reqData = getReqData(webApiRoute);
   xhr.open('POST', webApiUrl + webApiRoute);
   xhr.setRequestHeader('Content-Type', 'application/json');
+  allBtns.forEach(btn => {
+    btn.disabled = true;
+  });
   xhr.send(JSON.stringify(reqData));
   xhr.onreadystatechange = function() {
     if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
       let msg = JSON.parse(xhr.response);
       populateResMsg(msg);
+      allBtns.forEach(btn => {
+        btn.disabled = false;
+      });
       if (passCode.includes(msg.code)) goToPage(redirectTo);
     }
   }
