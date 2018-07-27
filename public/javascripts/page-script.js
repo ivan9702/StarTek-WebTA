@@ -49,7 +49,7 @@ const selectFPService = function(btnId) {
         populateResMsg({
           message: elemUserId.value + ' is not an Admin'
         });
-        return null;
+        return btnId;
       }
       redirectTo = '/admin';
       break;
@@ -88,7 +88,7 @@ function sendRegToWebAPI (req) {
   const xhr = new XMLHttpRequest();
   const webApiRoute = selectFPService(this.id) || req;
   if (clearResTimer) clearTimeout(clearResTimer);
-  if (!webApiRoute) {
+  if (!webApiRoute || webApiRoute === 'adminEntry') {
     clearPopulatedRes();
     return null;
   }
