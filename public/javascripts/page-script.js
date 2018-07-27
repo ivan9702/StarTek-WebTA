@@ -88,7 +88,10 @@ function sendRegToWebAPI (req) {
   const xhr = new XMLHttpRequest();
   const webApiRoute = selectFPService(this.id) || req;
   if (clearResTimer) clearTimeout(clearResTimer);
-  if (!webApiRoute) return null;
+  if (!webApiRoute) {
+    clearPopulatedRes();
+    return null;
+  }
   const reqData = getReqData(webApiRoute);
   xhr.open('POST', webApiUrl + webApiRoute);
   xhr.setRequestHeader('Content-Type', 'application/json');
@@ -189,7 +192,11 @@ function populateResMsg(res) {
     if (passCode.includes(res.code)) saveTaRecord(elemUserId.value, timeStr, clkEvent);
     resCodeHandler(res.code);
   }
-  clearResTimer = setTimeout(function() {
+  clearResTimer = clearPopulatedRes();
+}
+
+function clearPopulatedRes() {
+  return setTimeout(function() {
     if (!userNameInput) {
       resetInputTextColor();
       elemUserId.value = '';
