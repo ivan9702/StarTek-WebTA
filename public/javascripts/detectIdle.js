@@ -50,7 +50,9 @@ function timerIncrement() {
   if (idleTime > threshold) {
     clearTimeout(logoutTimer);
     sendRegToWebAPI('cancel');
-    window.location.href = originURL;
+    setTimeout(function() {
+      window.location.href = originURL;
+    }, 1000);
   }
 }
 
