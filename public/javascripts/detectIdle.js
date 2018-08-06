@@ -1,5 +1,3 @@
-var idleTime = 0;
-var threshold = 120;
 const enrollBtn = document.getElementById('enroll');
 
 document.addEventListener('keyup', function(event) {
@@ -16,10 +14,6 @@ document.addEventListener('keyup', function(event) {
       userNameInput.readOnly = false;
     }
   }
-  idleTime = 0;
-});
-window.addEventListener('message', function() {
-  threshold = 120;
   idleTime = 0;
 });
 

@@ -102,6 +102,8 @@ function sendRegToWebAPI (req) {
   xhr.onreadystatechange = function() {
     if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
       let msg = JSON.parse(xhr.response);
+      threshold = 120;
+      idleTime = 0;
       populateResMsg(msg);
       Array.prototype.forEach.call(allBtns, function(btn) {
         btn.disabled = false;

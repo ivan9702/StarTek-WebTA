@@ -1,6 +1,3 @@
-var idleTime = 0;
-var threshold = 120;
-
 document.addEventListener('keyup', function(event) {
   idleTime = 0;
 });
